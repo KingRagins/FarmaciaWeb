@@ -1,0 +1,211 @@
+#buscar {
+  list-style-type: none;
+}
+#farmacia {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;           /* Mantiene la proporción del logo */
+  border-radius: 16px;           /* Bordes redondeados */
+  background: #d2c1b600;              /* Fondo blanco */
+  padding: 8px;                  /* Espacio interno */
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#farmacia:hover {
+  transform: scale(1.05);        /* Efecto de aumento al pasar el mouse */
+  background: #d2c1b600;           /* Fondo más claro al hacer hover */
+}
+#dropdown {
+  padding-top: 6px;
+}
+#navbar-collapse {
+  height: 65px !important;
+}
+#collapse {
+  height: 65px !important;
+}
+#navegador {
+  height: 65px;
+}
+.btn-primary {
+  --bs-btn-bg: #fff;
+  color: black;
+  border-color: #D2C1B6;
+}
+.btn {
+    --bs-btn-border-color: #dc3545;
+    --bs-btn-color: #black;
+    --bs-btn-border-color: #D2C1B6;
+    --bs-btn-hover-color: #black;
+    --bs-btn-hover-bg: #D2C1B6;
+    --bs-btn-hover-border-color: #D2C1B6;
+    --bs-btn-focus-shadow-rgb: 25, 135, 84;
+    --bs-btn-active-color: #black;
+    --bs-btn-active-bg: #D2C1B6;
+    --bs-btn-active-border-color: #456882;
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #D2C1B6;
+    --bs-btn-disabled-bg: transparent;
+    --bs-btn-disabled-border-color: #D2C1B6;
+    --bs-gradient: none;
+}
+.form-control:focus {
+  border-color: #D2C1B6;
+  box-shadow: 0 0 0 .25rem rgb(210, 193, 182, .25);
+}
+.form-control {
+  border-color: #D2C1B6;
+}
+#iniciar_sesion {
+  color: #fff;
+}
+
+#iniciar_sesion:hover {
+  color: #D2C1B6;
+}
+
+#iniciar_sesion:hover i {
+  color: #D2C1B6;
+}
+#categorias {
+  margin: 0 0 0 0;
+}
+#carrito {
+  padding-top: 8px;
+}
+.bi .bi-person-fill {
+  padding-bottom: 80.5px;
+}
+#iniciar_sesion {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.bg-secondary {
+  background-color: #151110 !important;
+} 
+.navbar {
+  background-color: #151110 !important;
+}
+.bg-dark {
+    margin-bottom: 20px !important;
+}
+.card {
+  --bs-card-spacer-y: 1rem;
+  --bs-card-spacer-x: 1rem;
+  --bs-card-title-spacer-y: 0.5rem;
+  --bs-card-title-color: ;
+  --bs-card-subtitle-color: ;
+  --bs-card-border-width: var(--bs-border-width);
+  --bs-card-border-color: var(--bs-border-color-translucent);
+  --bs-card-border-radius: var(--bs-border-radius);
+  --bs-card-box-shadow: ;
+  --bs-card-inner-border-radius: calc(var(--bs-border-radius) - (var(--bs-border-width)));
+  --bs-card-cap-padding-y: 0.5rem;
+  --bs-card-cap-padding-x: 1rem;
+  --bs-card-cap-bg: rgba(var(--bs-body-color-rgb), 0.03);
+  --bs-card-cap-color: ;
+  --bs-card-height: ;
+  --bs-card-color: ;
+  --bs-card-bg: #151110; /*color cartas*/
+  --bs-card-img-overlay-padding: 1rem;
+  --bs-card-group-margin: 0.75rem;
+  position: relative;
+  display: flex
+;
+  flex-direction: column;
+  min-width: 0;
+  height: var(--bs-card-height);
+  color: var(--bs-body-color);
+  word-wrap: break-word;
+  background-color: var(--bs-card-bg);
+  background-clip: border-box;
+  border: var(--bs-card-border-width) solid var(--bs-card-border-color);
+  border-radius: var(--bs-card-border-radius);
+}
+
+/* Estilos específicos para el carrito */
+#carrito-container {
+    min-height: calc(100vh - 160px);
+}
+
+/* Estilos para los botones del carrito */
+.btn-custom-primary {
+    background-color: #1B3C53;
+    border-color: #D2C1B6;
+    color: #F9F3EF;
+}
+
+.btn-custom-primary:hover {
+    background-color: #456882;
+    border-color: #D2C1B6;
+    color: #F9F3EF;
+}
+
+.btn-custom-secondary {
+    background-color: transparent;
+    border-color: #D2C1B6;
+    color: #F9F3EF;
+}
+
+.btn-custom-secondary:hover {
+    background-color: #D2C1B6;
+    border-color: #D2C1B6;
+    color: #1B3C53;
+}
+
+/* Estilos para las cards */
+.card-carrito {
+    background-color: #456882;
+    border-color: #D2C1B6;
+    color: #F9F3EF;
+}
+
+/* Estilos para los badges */
+.badge-carrito {
+    background-color: #D2C1B6;
+    color: #1B3C53;
+}
+
+/* Efectos hover para productos */
+.producto-item:hover {
+    background-color: rgba(210, 193, 182, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #carrito-container {
+        padding: 0 10px;
+    }
+    
+    .sticky-top {
+        position: static !important;
+    }
+}
+
+/* Animaciones */
+@keyframes agregarProducto {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.producto-agregado {
+    animation: agregarProducto 0.3s ease;
+}
+
+/* Estilos para el carrito vacío */
+.carrito-vacio {
+    text-align: center;
+    padding: 40px 0;
+}
+
+.carrito-vacio i {
+    font-size: 4rem;
+    color: #D2C1B6;
+    margin-bottom: 20px;
+}
