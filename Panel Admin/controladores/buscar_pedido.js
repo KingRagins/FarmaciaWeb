@@ -77,14 +77,12 @@ function mostrarPedidoEncontrado(pedido) {
     showCancelButton: false,
   }).then((result) => {
     if (result.isConfirmed) {
-      // Abrir modal de métodos de pago
       abrirModalPago(pedido);
     }
   });
 }
 
 function abrirModalPago(pedido) {
-  // Lista de bancos venezolanos (principales, ~25 basados en datos 2024/2025)
   const bancos = [
     "Banco de Venezuela (BDV)",
     "Banco Nacional de Crédito (BNC)",
@@ -181,7 +179,7 @@ function abrirModalPago(pedido) {
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Referencia (4 dígitos):</label>
-                                <input type="number" id="referenciaMovil" class="form-control" maxlength="4" minlength="4" placeholder="Ej: 1234" pattern="[0-9]{4}">
+                                <input type="text" id="referenciaMovil" class="form-control" maxlength="4" placeholder="Ej: 1234" inputmode="numeric">
                             </div>
                         </div>
                     </div>
@@ -194,102 +192,109 @@ function abrirModalPago(pedido) {
         </div>
     `;
 
-  // Insertar modal en el body
   $("body").append(modalHTML);
-
-  // Mostrar modal
   $("#modalPago").modal("show");
 
   // Lógica dinámica
   $("#metodoPago").change(function () {
     const metodo = $(this).val();
-    $(".section-pago").hide();
     $("#divisaSection, #tarjetaSection, #movilSection").hide();
+    $("#btnConfirmarPago").prop("disabled", true);
 
     if (metodo === "divisas" || metodo === "bolivares") {
       $("#divisaSection").show();
-      $("#montoRecibido").on("input", function () {
-        const recibido = parseFloat($(this).val()) || 0;
-        const total = parseFloat(pedido.total);
-        const vuelto = recibido - total;
-        if (recibido >= total) {
-          $("#vueltoValue").text(
-            (metodo === "divisas" ? "$" : "Bs. ") + vuelto.toFixed(2)
-          );
-          $("#vueltoInfo").show();
-          $("#btnConfirmarPago").prop("disabled", false);
-        } else {
-          $("#vueltoInfo").hide();
-          $("#btnConfirmarPago").prop("disabled", true);
-        }
-      });
+      $("#montoRecibido")
+        .off("input")
+        .on("input", function () {
+          const recibido = parseFloat($(this).val()) || 0;
+          const total = parseFloat(pedido.total);
+          const vuelto = recibido - total;
+          if (recibido >= total) {
+            $("#vueltoValue").text(
+              (metodo === "divisas" ? "$" : "Bs. ") + vuelto.toFixed(2)
+            );
+            $("#vueltoInfo").show();
+            $("#btnConfirmarPago").prop("disabled", false);
+          } else {
+            $("#vueltoInfo").hide();
+            $("#btnConfirmarPago").prop("disabled", true);
+          }
+        });
+    } else if (metodo === "tarjeta") {
+      $("#tarjetaSection").show();
+      $("#bancoTarjeta")
+        .off("change")
+        .on("change", function () {
+          $("#btnConfirmarPago").prop("disabled", $(this).val() === "");
+        });
+      $("#btnConfirmarPago").prop("disabled", $("#bancoTarjeta").val() === "");
     } else if (metodo === "pago_movil") {
       $("#movilSection").show();
       $("#btnConfirmarPago").prop("disabled", true);
 
-      // Validación en tiempo real
-      $("#bancoMovil").change(function () {
-        validarPagoMovil();
-      });
-
-      $("#referenciaMovil").on("input", function () {
-        let val = $(this).val();
-        if (val.length > 4) {
-          $(this).val(val.slice(0, 4));
-        }
-        validarPagoMovil();
-      });
+      // Validación en tiempo real para Pago Móvil
+      $("#bancoMovil").off("change").on("change", validarPagoMovil);
+      $("#referenciaMovil")
+        .off("input")
+        .on("input", function () {
+          let val = $(this).val().replace(/\D/g, "").substring(0, 4);
+          $(this).val(val);
+          validarPagoMovil();
+        });
 
       function validarPagoMovil() {
         const banco = $("#bancoMovil").val();
         const ref = $("#referenciaMovil").val();
-        const esValido = banco && ref.length === 4;
-        $("#btnConfirmarPago").prop("disabled", !esValido);
+        const habilitar = banco && ref.length === 4;
+        $("#btnConfirmarPago").prop("disabled", !habilitar);
       }
+
+      validarPagoMovil(); // Estado inicial
     }
   });
 
   // Confirmar pago
-  $("#btnConfirmarPago").click(function () {
-    const metodo = $("#metodoPago").val();
-    let datosPago = {
-      codigo_pedido: pedido.codigo_pedido,
-      metodo_pago: metodo,
-    };
+  $("#btnConfirmarPago")
+    .off("click")
+    .on("click", function () {
+      const metodo = $("#metodoPago").val();
+      let datosPago = {
+        codigo_pedido: pedido.codigo_pedido,
+        metodo_pago: metodo,
+      };
 
-    if (metodo === "divisas" || metodo === "bolivares") {
-      datosPago.monto_recibido = parseFloat($("#montoRecibido").val());
-      datosPago.vuelto = datosPago.monto_recibido - pedido.total;
-    } else if (metodo === "tarjeta") {
-      datosPago.banco = $("#bancoTarjeta").val();
-    } else if (metodo === "pago_movil") {
-      datosPago.banco = $("#bancoMovil").val();
-      datosPago.referencia_pago = $("#referenciaMovil").val();
-    }
+      if (metodo === "divisas" || metodo === "bolivares") {
+        datosPago.monto_recibido = parseFloat($("#montoRecibido").val());
+        datosPago.vuelto = datosPago.monto_recibido - pedido.total;
+      } else if (metodo === "tarjeta") {
+        datosPago.banco = $("#bancoTarjeta").val();
+      } else if (metodo === "pago_movil") {
+        datosPago.banco = $("#bancoMovil").val();
+        datosPago.referencia_pago = $("#referenciaMovil").val();
+      }
 
-    // Llamar AJAX para registrar
-    $.ajax({
-      url: "controladores/registrar_pago.php",
-      type: "POST",
-      data: datosPago,
-      dataType: "json",
-      success: function (data) {
-        if (data.success) {
-          Swal.fire("¡Éxito!", data.message, "success");
-          $("#modalPago").modal("hide");
-          $("#codigo_pedido").val(""); // Limpiar input
-        } else {
-          Swal.fire("Error", data.message, "error");
-        }
-      },
-      error: function () {
-        Swal.fire("Error", "No se pudo registrar el pago.", "error");
-      },
+      $.ajax({
+        url: "controladores/registrar_pago.php",
+        type: "POST",
+        data: datosPago,
+        dataType: "json",
+        success: function (data) {
+          if (data.success) {
+            Swal.fire("¡Éxito!", data.message, "success");
+            $("#modalPago").modal("hide");
+            $("#codigo_pedido").val("");
+          } else {
+            Swal.fire("Error", data.message, "error");
+          }
+        },
+        error: function () {
+          Swal.fire("Error", "No se pudo registrar el pago.", "error");
+        },
+      });
     });
 
-    // Remover modal después
-    $("#modalPago").on("hidden.bs.modal", function () {
-      $(this).remove();
-    });
+  // Limpiar modal al cerrarse
+  $("#modalPago").on("hidden.bs.modal", function () {
+    $(this).remove();
   });
 }

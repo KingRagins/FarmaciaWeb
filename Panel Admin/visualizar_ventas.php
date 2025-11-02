@@ -19,12 +19,43 @@ require_once "view/verventas.php";
 ?>
 
 <!--INICIO DEL CONTENIDO PRINCIPAL-->
-
 <div class="container">
+    <h3 class="text-center text-secondary">Pedidos Disponibles</h3>
 
-<!-- Mensaje de bienvenida al usuario que logeo-->
- <h1>Ventas Realizadas</h1>
-<p>asasadasdasd</p>
+    <?php
+    require_once "../logins/logouts/conexion.php"; 
+    $conexion = Conexion::Conectar();
+    $sql_conexion = $conexion->query("SELECT id_pago, id_venta, id_usuario, banco, metodo_pago, monto_unico, referencia, fecha_pago FROM pagos");
+    ?>
+         <table class="table table-bordered table-hover w-100 tabla-empleados" id="example">
+        <thead>
+            <tr>
+                <th scope="col">id pago</th>
+                <th scope="col">id venta</th>
+                <th scope="col">id_usuario</th>
+                <th scope="col">Banco</th>
+                <th scope="col">Metodo de pago</th>
+                <th scope="col">Monto Total</th>
+                <th scope="col">N° de Referencia</th>
+                <th scope="col">Fecha de pago</th>
+            </tr>
+        </thead>
+        <tbody id="tabla_ventas" class="users_table_body">
+            <?php while ($sql = $sql_conexion->fetch(PDO::FETCH_ASSOC)) { ?>
+                <tr>
+                    <td><?php echo $sql["id_pago"]?></td>
+                    <td><?php echo $sql["id_venta"]; ?></td>
+                    <td><?php echo $sql["id_usuario"]; ?></td>
+                    <td><?php echo $sql["banco"]; ?></td>
+                    <td><?php echo $sql["metodo_pago"]; ?></td>
+                    <td><?php echo $sql["monto_unico"]; ?></td>
+                    <td><?php echo $sql["referencia"]; ?></td>
+                    <td><?php echo $sql["fecha_pago"]; ?></td>
+                </tr>
+            <?php } ?>
+        </tbody>
+    </table>
+
 
 
 <script src="../logins/jquery/jquery-3.3.1.min.js"></script>
