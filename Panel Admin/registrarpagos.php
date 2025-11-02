@@ -1,12 +1,13 @@
 <?php
+// Inicia la sesión
 session_start();
 
-// === PROTECCIÓN DE ACCESO ===
+// 1. Lógica de validación de sesión
+// Si no hay una sesión de usuario, redirige inmediatamente al login.
 if (!isset($_SESSION['s_usuario']) || empty($_SESSION['s_usuario'])) {
     header("Location: /Farmacia/logins/login_admin.php");
     exit();
 }
-
 
 // 2. Cabeceras HTTP para prevenir el caché del navegador
 header("Cache-Control: no-cache, no-store, must-revalidate");
@@ -19,20 +20,41 @@ require_once "view/modificar_pagos.php";
 
 <!--INICIO DEL CONTENIDO PRINCIPAL-->
 
-<div class="container">
+<div class="container mt-5">
+    <h3 class="text-center text-secondary mb-4">Registrar Pago</h3>
 
-<!-- Mensaje de bienvenida al usuario que logeo-->
- <h1>Registrar Pago</h1>
-<p>asasadasdasd</p>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="codigo_pedido">Buscar Pedido por Código:</label>
+                <input 
+                    type="text" 
+                    id="codigo_pedido" 
+                    class="form-control" 
+                    placeholder="Ej: FL4o0hWvuB" 
+                    autocomplete="off"
+                >
+                <small class="text-muted">Ingresa el código del pedido apartado</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Aquí se mostrará el resultado (opcional) -->
+    <div id="resultado_pedido" class="mt-4"></div>
+</div>
 
 
 <script src="../logins/jquery/jquery-3.3.1.min.js"></script>
 <script src="../logins/bootstrap/js/bootstrap.min.js"></script>
 <script src="../logins/popper/popper.min.js"></script>
 <script src="../logins/Plugins/sweetalert2/sweetalert2.all.min.js"></script>
+<script src="controladores/buscar_pedido.js"></script>
+
+
+
 <!-- FIN DEL CONTENIDO PRINCIPAL-->
 <?php require_once "view/parte_inferior.php"?>
-    <script>
+ <script>
         window.history.pushState(null, null, location.href);
         window.onpopstate = function() {
             window.history.go(1);
@@ -41,5 +63,3 @@ require_once "view/modificar_pagos.php";
     <script src="offline_service/boostrap/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="offline_service/fontawesome-free/css/all.min.css">
 </div>
-<!--la carpeta offline_service tiene como proposito que los modales y los logitos
-    de modificar o eliminar o desactivar usuarios, productos etc, funcione con o sin internet-->

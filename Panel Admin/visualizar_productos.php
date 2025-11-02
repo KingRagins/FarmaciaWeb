@@ -1,7 +1,8 @@
 <?php
+// Inicia la sesión
 session_start();
 
-// === PROTECCIÓN DE ACCESO ===
+// Validación de sesión
 if (!isset($_SESSION['s_usuario']) || empty($_SESSION['s_usuario'])) {
     header("Location: /Farmacia/logins/login_admin.php");
     exit();
@@ -195,14 +196,13 @@ require_once "view/verproductos.php";
 
 <!-- FIN DEL CONTENIDO PRINCIPAL -->
 <?php require_once "view/parte_inferior.php"; ?>
-    <script>
-        window.history.pushState(null, null, location.href);
-        window.onpopstate = function() {
-            window.history.go(1);
-        };
-    </script>
-    <script src="offline_service/boostrap/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="offline_service/fontawesome-free/css/all.min.css">
-</div>
-<!--la carpeta offline_service tiene como proposito que los modales y los logitos
-    de modificar o eliminar o desactivar usuarios, productos etc, funcione con o sin internet-->
+
+<script>
+    // Esta línea evita que la página protegida se guarde en el historial del navegador
+    window.history.pushState(null, null, location.href);
+    window.onpopstate = function() {
+        window.history.go(1);
+    };
+</script>
+<script src="offline_service/boostrap/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="offline_service/fontawesome-free/css/all.min.css">

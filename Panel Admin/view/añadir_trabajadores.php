@@ -58,16 +58,13 @@ if (is_null($_SESSION['s_usuario'])) {
           <div class="sidebar-brand-text mx-3">Panel Administrador</div>
         </a>
 
-        
-
-
         <!-- Divider -->
         <hr class="sidebar-divider my-0" />
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item">
           <a class="nav-link" href="index.php">
-          <i class="fa-solid fa-gauge"></i>
+            <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Panel de Control</span></a
           >
         </li>
@@ -99,7 +96,7 @@ if (is_null($_SESSION['s_usuario'])) {
           >
             <div class="bg-white py-2 collapse-inner rounded">
               <h6 class="collapse-header">Opciones:</h6>
-              <?php if (isset($_SESSION['s_rol']) && $_SESSION['s_rol'] == 1): ?>
+             <?php if (isset($_SESSION['s_rol']) && $_SESSION['s_rol'] == 1): ?>
     <a class="collapse-item active" href="agregartrabajadores.php">Trabajadores</a>
 <?php else: ?>
     <a class="collapse-item disabled" href="javascript:void(0);" 
@@ -129,7 +126,7 @@ if (is_null($_SESSION['s_usuario'])) {
         <!-- pedidos productos y ventas-->
                         <li class="nav-item">
                 <a class="nav-link" href="visualizar_productos.php">
-                    <i class="fa-regular fa-image"></i>
+                   <i class="fa-solid fa-image"></i>
                     <span>Productos</span></a>
                         </li>
 

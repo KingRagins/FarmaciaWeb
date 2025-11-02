@@ -10,7 +10,7 @@ $usuario = (isset($_POST['usuario'])) ? $_POST['usuario'] : '';
 $password = (isset($_POST['password'])) ? $_POST['password'] : '';
 
 // Verificamos si el usuario existe
-$consulta = "SELECT id_rol,nombre, apellido, contraseña FROM admin_trabajadores WHERE nombre_de_usuario = '$usuario'";
+$consulta = "SELECT id_rol ,nombre, apellido, contraseña FROM admin_trabajadores WHERE nombre_de_usuario = '$usuario'";
 $resultado = $conexion->prepare($consulta);
 $resultado->execute();
 $data = $resultado->fetchAll(PDO::FETCH_ASSOC);
@@ -26,6 +26,7 @@ if (empty($data)) {
         $_SESSION["s_nombre"] = $data[0]['nombre'];
         $_SESSION["s_apellido"] = $data[0]['apellido'];
         $_SESSION["s_rol"] = $data[0]['id_rol']; // Añadimos el rol a la sesión
+
         echo 'success';
     } else {
         echo 'incorrect_password';

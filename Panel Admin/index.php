@@ -1,12 +1,11 @@
 <?php
 session_start();
 
-// === PROTECCIÓN DE ACCESO ===
+// 1. Lógica de validación de sesión
 if (!isset($_SESSION['s_usuario']) || empty($_SESSION['s_usuario'])) {
     header("Location: /Farmacia/logins/login_admin.php");
     exit();
 }
-
 
 // 2. Cabeceras HTTP para prevenir el caché del navegador
 header("Cache-Control: no-cache, no-store, must-revalidate");
@@ -29,20 +28,6 @@ require_once "view/parte_superior.php";
 
 <!--INICIO DEL CONTENIDO PRINCIPAL-->
 <div class="container">
-
-    <h5 class="text-center text-secondary"><strong>Bienvenido           <?php 
-                  if (isset($_SESSION['s_nombre']) && isset($_SESSION['s_apellido'])) {
-        // Si ambas variables existen, concatenamos el nombre y el apellido.
-      
-        // Si la condición 'if' no se cumple (es decir, las variables de sesión no están definidas),
-        // el código no hace nada y no se muestra el nombre.
-        
-        echo $_SESSION['s_nombre'] . ' ' . $_SESSION['s_apellido'];
-        // El '.' se usa para unir las cadenas de texto.
-        // Se agrega un espacio en blanco entre el nombre y el apellido.
-
-          }
-            ?></strong></h5>
     <h3 class="text-center text-secondary">Lista De Empleados</h3>
 
     <?php
@@ -184,5 +169,3 @@ require_once "view/parte_superior.php";
     <script src="offline_service/boostrap/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="offline_service/fontawesome-free/css/all.min.css">
 </div>
-<!--la carpeta offline_service tiene como proposito que los modales y los logitos
-    de modificar o eliminar o desactivar usuarios, productos etc, funcione con o sin internet-->
