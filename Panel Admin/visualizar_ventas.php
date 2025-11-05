@@ -20,6 +20,21 @@ require_once "view/verventas.php";
 
 <!--INICIO DEL CONTENIDO PRINCIPAL-->
 <div class="container">
+
+<!-- BUSCADOR -->
+    <div class="mb-3">
+        <input type="search" 
+               id="buscador_ventas" 
+               class="form-control" 
+               placeholder="Buscar ventas por ID, banco, referencia, fecha..."
+               style="max-width: 400px;">
+    </div>
+
+<!-- Tu tabla -->
+<table class="table table-bordered table-hover" id="tabla_ventas">
+    <!-- ... -->
+</table>
+
     <h3 class="text-center text-secondary">Pedidos Disponibles</h3>
 
     <?php
@@ -27,8 +42,8 @@ require_once "view/verventas.php";
     $conexion = Conexion::Conectar();
     $sql_conexion = $conexion->query("SELECT id_pago, id_venta, id_usuario, banco, metodo_pago, monto_unico, referencia, fecha_pago FROM pagos");
     ?>
-         <table class="table table-bordered table-hover w-100 tabla-empleados" id="example">
-        <thead>
+         <table class="table table-bordered table-hover w-100 tabla-empleados" id="tabla_ventas">
+        <thead class="thead-dark">
             <tr>
                 <th scope="col">id pago</th>
                 <th scope="col">id venta</th>
@@ -62,6 +77,13 @@ require_once "view/verventas.php";
 <script src="../logins/bootstrap/js/bootstrap.min.js"></script>
 <script src="../logins/popper/popper.min.js"></script>
 <script src="../logins/Plugins/sweetalert2/sweetalert2.all.min.js"></script>
+<script src="controladores/buscador.js"></script>
+
+<script>
+  $(document).ready(function () {
+    aplicarBuscador("tabla_ventas", "buscador_ventas");
+  });
+</script>
 <!-- FIN DEL CONTENIDO PRINCIPAL-->
 <?php require_once "view/parte_inferior.php"?>
  <script>

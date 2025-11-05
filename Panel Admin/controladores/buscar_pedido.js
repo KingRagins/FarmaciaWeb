@@ -41,8 +41,8 @@ function mostrarPedidoEncontrado(pedido) {
   let productosHTML = "";
   pedido.productos.forEach((p) => {
     productosHTML += `<li><strong>${p.nombre}</strong> × ${
-      p.cantidad
-    } = $${parseFloat(p.subtotal).toFixed(2)}</li>`;
+      p.dp_cantidad
+    } = Bs.${parseFloat(p.subtotal).toFixed(2)}</li>`;
   });
 
   Swal.fire({
@@ -60,7 +60,7 @@ function mostrarPedidoEncontrado(pedido) {
               .map(
                 (p) =>
                   `<li><strong>${p.nombre}</strong> × ${
-                    p.cantidad
+                    p.dp_cantidad
                   } = Bs.${parseFloat(p.subtotal).toFixed(2)}</li>`
               )
               .join("")}
@@ -128,7 +128,7 @@ function abrirModalPago(pedido) {
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label class="form-label">Total a pagar: $${parseFloat(
+                            <label class="form-label">Total a pagar: Bs.${parseFloat(
                               pedido.total
                             ).toFixed(2)}</label>
                         </div>
@@ -153,7 +153,7 @@ function abrirModalPago(pedido) {
                                 }" placeholder="Ej: 3000.00">
                             </div>
                             <div class="alert alert-info" id="vueltoInfo" style="display: none;">
-                                <strong>Vuelto:</strong> <span id="vueltoValue">$0.00</span>
+                                <strong>Vuelto:</strong> <span id="vueltoValue">Bs.0.00</span>
                             </div>
                         </div>
 
@@ -211,7 +211,7 @@ function abrirModalPago(pedido) {
           const vuelto = recibido - total;
           if (recibido >= total) {
             $("#vueltoValue").text(
-              (metodo === "divisas" ? "$" : "Bs. ") + vuelto.toFixed(2)
+              (metodo === "divisas" ? "Bs." : "Bs. ") + vuelto.toFixed(2)
             );
             $("#vueltoInfo").show();
             $("#btnConfirmarPago").prop("disabled", false);
@@ -280,7 +280,7 @@ function abrirModalPago(pedido) {
         dataType: "json",
         success: function (data) {
           if (data.success) {
-            Swal.fire("¡Éxito!", data.message, "success");
+            Swal.fire("Éxito!", data.message, "success");
             $("#modalPago").modal("hide");
             $("#codigo_pedido").val("");
           } else {

@@ -43,11 +43,25 @@ require_once "view/verproductos.php";
 <!--INICIO DEL CONTENIDO PRINCIPAL-->
 
 <div class="container">
+
+
     <!-- Mensaje de bienvenida al usuario que logeo-->
     <h3 class="text-center text-secondary">Lista De Productos</h3>
 
-    <table class="table table-bordered table-hover w-100" id="example">
-        <thead>
+<!-- BUSCADOR -->
+<div class="mb-3">
+  <input type="search" 
+         id="buscador_productos" 
+         class="form-control" 
+         placeholder="Buscar productos por nombre, ID, categoría, precio..."
+         style="max-width: 400px;">
+</div>
+
+<table class="table table-bordered table-hover w-100" id="tabla_productos">
+  <!-- ... -->
+</table>
+    <table class="table table-bordered table-hover w-100" id="tabla_productos">
+        <thead class="thead-dark">
             <tr>
                 <th scope="col">ID</th>
                 <th scope="col">Nombre</th>
@@ -59,7 +73,7 @@ require_once "view/verproductos.php";
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
-        <tbody id="tabla_productos" class="productos_table_body">
+        <tbody id="tabla_productos_body" class="productos_table_body">
             <?php while ($sql = $sql_conexion->fetch(PDO::FETCH_ASSOC)) { ?>
                 <tr>
                     <td><?php echo htmlspecialchars($sql["id_producto"] ?? ''); ?></td>
@@ -193,6 +207,12 @@ require_once "view/verproductos.php";
 <script src="../logins/Plugins/sweetalert2/sweetalert2.all.min.js"></script>
 <script src="controladores/codigo_modificar_producto.js"></script>
 <script src="controladores/eliminar_producto.js"></script>
+<script src="controladores/buscador.js"></script>
+<script>
+  $(document).ready(function () {
+    aplicarBuscador("tabla_productos", "buscador_productos");
+  });
+</script>
 
 <!-- FIN DEL CONTENIDO PRINCIPAL -->
 <?php require_once "view/parte_inferior.php"; ?>

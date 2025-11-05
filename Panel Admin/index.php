@@ -28,6 +28,20 @@ require_once "view/parte_superior.php";
 
 <!--INICIO DEL CONTENIDO PRINCIPAL-->
 <div class="container">
+
+<!-- BUSCADOR -->
+    <div class="mb-3">
+        <input type="search" 
+               id="buscador_trabajadores" 
+               class="form-control" 
+               placeholder="Buscar trabajadores por Rol, Nombre/Apellido, cedula, Telefono..."
+               style="max-width: 400px;">
+    </div>
+
+    <!-- Tu tabla -->
+<table class="table table-bordered table-hover" id="tabla_trabajadores">
+    <!-- ... -->
+</table>
     <h3 class="text-center text-secondary">Lista De Empleados</h3>
 
     <?php
@@ -36,8 +50,8 @@ require_once "view/parte_superior.php";
     $sql_conexion = $conexion->query("SELECT id_trabajador, id_rol, nombre, apellido, cedula, nombre_de_usuario, numero_de_telefono, correo_electronico FROM admin_trabajadores");
     ?>
 
-    <table class="table table-bordered table-hover w-100 tabla-empleados" id="example">
-        <thead>
+    <table class="table table-bordered table-hover w-100 tabla-empleados" id="tabla_trabajadores">
+        <thead class="thead-dark">
             <tr>
                 <th scope="col">Rol</th>
                 <th scope="col">Nombre</th>
@@ -159,6 +173,13 @@ require_once "view/parte_superior.php";
     <script src="../logins/Plugins/sweetalert2/sweetalert2.all.min.js"></script>
     <script src="controladores/codigo_modificar_usuario.js"></script>
     <script src="controladores/eliminar_usuario.js"></script>
+
+    <script src="controladores/buscador.js"></script>
+<script>
+  $(document).ready(function () {
+    aplicarBuscador("tabla_trabajadores", "buscador_trabajadores");
+  });
+</script>
     <?php require_once "view/parte_inferior.php"?>
     <script>
         window.history.pushState(null, null, location.href);
