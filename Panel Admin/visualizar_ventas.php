@@ -35,7 +35,7 @@ require_once "view/verventas.php";
     <!-- ... -->
 </table>
 
-    <h3 class="text-center text-secondary">Pedidos Disponibles</h3>
+    <h3 class="text-center text-secondary">Ventas Realizadas</h3>
 
     <?php
     require_once "../logins/logouts/conexion.php"; 

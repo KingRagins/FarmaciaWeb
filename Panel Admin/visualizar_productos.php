@@ -44,10 +44,6 @@ require_once "view/verproductos.php";
 
 <div class="container">
 
-
-    <!-- Mensaje de bienvenida al usuario que logeo-->
-    <h3 class="text-center text-secondary">Lista De Productos</h3>
-
 <!-- BUSCADOR -->
 <div class="mb-3">
   <input type="search" 
@@ -56,6 +52,10 @@ require_once "view/verproductos.php";
          placeholder="Buscar productos por nombre, ID, categoría, precio..."
          style="max-width: 400px;">
 </div>
+
+    <!-- Mensaje de bienvenida al usuario que logeo-->
+    <h3 class="text-center text-secondary">Lista De Productos</h3>
+
 
 <table class="table table-bordered table-hover w-100" id="tabla_productos">
   <!-- ... -->
@@ -207,6 +207,10 @@ require_once "view/verproductos.php";
 <script src="../logins/Plugins/sweetalert2/sweetalert2.all.min.js"></script>
 <script src="controladores/codigo_modificar_producto.js"></script>
 <script src="controladores/eliminar_producto.js"></script>
+
+
+
+
 <script src="controladores/buscador.js"></script>
 <script>
   $(document).ready(function () {

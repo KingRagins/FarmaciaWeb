@@ -37,6 +37,7 @@ require_once "view/parte_superior.php";
                placeholder="Buscar trabajadores por Rol, Nombre/Apellido, cedula, Telefono..."
                style="max-width: 400px;">
     </div>
+    
 
     <!-- Tu tabla -->
 <table class="table table-bordered table-hover" id="tabla_trabajadores">
