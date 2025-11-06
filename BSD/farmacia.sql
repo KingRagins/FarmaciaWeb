@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-10-2025 a las 02:44:18
+-- Tiempo de generación: 06-11-2025 a las 03:11:51
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -44,10 +44,8 @@ CREATE TABLE `admin_trabajadores` (
 --
 
 INSERT INTO `admin_trabajadores` (`id_trabajador`, `id_rol`, `nombre`, `apellido`, `cedula`, `numero_de_telefono`, `nombre_de_usuario`, `correo_electronico`, `contraseña`) VALUES
-(41, 1, 'Sebastian', 'Ramirez', '12312321', '123123214', 'sebas1234', 'sebas@gmail.com', '$2y$10$I0ZuhzxbQovGOeEOiVl86.b.VnYtvRVtQA604hOkPJaG2SPhbXkC6'),
-(42, 1, 'Reinaldo', 'Polanco', '31035538', '04241583015', 'reipola', 'reinaldopolanco14@gmail.com', '$2y$10$LsxbTUU5d8cQRMfTdK.FT.qwgRfj4fnKEC86knrN0ECuSFLPmPZLe'),
-(43, 2, 'Jose', 'Leite', '8908908', '98977989', 'jose112', 'jose@gmail.com', '$2y$10$SsE/e3xq6rhe/FD.jpvV1ORXgOx2qu4oRPnGvrTb0ED2IFFwhYz7C'),
-(47, 1, 'miguel', 'flores', '30667634', '04149027363', 'legumin', 'mafr737@gmail.com', '$2y$10$CK0f75DiIkAAOJAeYjRSb.1qDoQxnKtPIReSFnpjRUm1m.5cMSdN6');
+(50, 2, 'Daniel', 'Polanco', '7255986', '04143782417', 'danipola', 'daniel@gmail.com', '$2y$10$Y34FKaAzkU5YecehtkfbfeyYDJOgvy/QfEsdAbPNVcC1C3jPZ1qdq'),
+(51, 1, 'Reinaldo', 'Polanco', '31035538', '04241583015', 'reipola', 'reinaldopolanco14@gmail.com', '$2y$10$7i8H4jI1thW507pV1zRp1OVQlC2bJHU3jd3w.L426vBk9nOnmuZBC');
 
 -- --------------------------------------------------------
 
@@ -60,14 +58,6 @@ CREATE TABLE `carrito_compras` (
   `id_usuario` int(11) NOT NULL,
   `fecha_creacion` varchar(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `carrito_compras`
---
-
-INSERT INTO `carrito_compras` (`id_carrito`, `id_usuario`, `fecha_creacion`) VALUES
-(1, 12, '2025-10-25 '),
-(3, 13, '2025-10-30 ');
 
 -- --------------------------------------------------------
 
@@ -102,15 +92,22 @@ CREATE TABLE `detalles_carrito` (
   `dc_cantidad` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Volcado de datos para la tabla `detalles_carrito`
+-- Estructura de tabla para la tabla `detalles_pago`
 --
 
-INSERT INTO `detalles_carrito` (`id_detalle_car`, `id_carrito`, `id_producto`, `dc_cantidad`) VALUES
-(6, 1, 24, 3),
-(7, 1, 16, 1),
-(8, 1, 21, 3),
-(12, 3, 20, 1);
+CREATE TABLE `detalles_pago` (
+  `id_detalle_pago` int(11) NOT NULL,
+  `id_venta` int(11) NOT NULL,
+  `metodo_pago` enum('divisas','bolivares','tarjeta','pago_movil') NOT NULL,
+  `monto_recibido` decimal(10,2) DEFAULT NULL,
+  `vuelto` decimal(10,2) DEFAULT NULL,
+  `banco` varchar(100) DEFAULT NULL,
+  `referencia_pago` varchar(20) DEFAULT NULL,
+  `fecha_registro` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -126,14 +123,6 @@ CREATE TABLE `detalles_pedido` (
   `monto_unico` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `detalles_pedido`
---
-
-INSERT INTO `detalles_pedido` (`id_detallle`, `id_venta`, `id_producto`, `dp_cantidad`, `monto_unico`) VALUES
-(1, 1, 16, 1, 100),
-(2, 1, 21, 5, 990);
-
 -- --------------------------------------------------------
 
 --
@@ -146,17 +135,6 @@ CREATE TABLE `direcciones_usuarios` (
   `direccion` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `direcciones_usuarios`
---
-
-INSERT INTO `direcciones_usuarios` (`id_direccion`, `id_usuario`, `direccion`) VALUES
-(1, 8, 'Los Teques'),
-(2, 9, 'Mondalandia'),
-(4, 11, 'los teques'),
-(5, 12, 'los teques'),
-(6, 13, 'los teques');
-
 -- --------------------------------------------------------
 
 --
@@ -166,10 +144,33 @@ INSERT INTO `direcciones_usuarios` (`id_direccion`, `id_usuario`, `direccion`) V
 CREATE TABLE `pagos` (
   `id_pago` int(11) NOT NULL,
   `id_venta` int(11) NOT NULL,
+  `id_usuario` int(11) DEFAULT NULL,
   `monto_unico` float NOT NULL,
-  `metodo_pago` enum('tarjeta','efectivo','pago movil','bio pago') NOT NULL,
-  `estado_pago` enum('pendiente','pagado','rechazado','') NOT NULL
+  `metodo_pago` enum('divisas','bolivares','tarjeta','pago_movil') NOT NULL,
+  `estado_pago` enum('pendiente','pagado','rechazado','') NOT NULL,
+  `banco` varchar(100) DEFAULT NULL,
+  `referencia` varchar(20) DEFAULT NULL,
+  `fecha_pago` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `pagos`
+--
+
+INSERT INTO `pagos` (`id_pago`, `id_venta`, `id_usuario`, `monto_unico`, `metodo_pago`, `estado_pago`, `banco`, `referencia`, `fecha_pago`) VALUES
+(19, 17, 14, 40, 'tarjeta', 'pagado', 'Banco del Tesoro', NULL, '2025-11-02 12:23:17'),
+(20, 18, 14, 40, 'pago_movil', 'pagado', 'Banco Mercantil', '4590', '2025-11-02 12:23:39'),
+(22, 20, 14, 69, 'bolivares', 'pagado', NULL, NULL, '2025-11-02 12:38:28'),
+(23, 21, 14, 250, 'divisas', 'pagado', NULL, NULL, '2025-11-02 12:40:56'),
+(25, 27, 14, 12, 'pago_movil', 'pendiente', 'Banco del Tesoro', '8564', '2025-11-05 13:21:52'),
+(26, 23, 14, 30, 'bolivares', 'pendiente', NULL, NULL, '2025-11-05 13:26:22'),
+(27, 26, 14, 30, 'tarjeta', 'pendiente', 'Banco Bicentenario', NULL, '2025-11-05 13:33:27'),
+(28, 24, 14, 88, 'tarjeta', 'pendiente', 'BBVA Provincial', NULL, '2025-11-05 13:43:21'),
+(29, 29, 14, 120, 'pago_movil', 'pagado', 'Banco Mercantil', '2345', '2025-11-05 14:17:45'),
+(30, 30, 14, 40, 'pago_movil', 'pagado', 'Banesco', '2345', '2025-11-05 15:23:04'),
+(31, 33, 14, 40, 'pago_movil', 'pagado', 'Banco Bicentenario', '6745', '2025-11-05 18:44:47'),
+(32, 34, 14, 40, 'tarjeta', 'pagado', 'Banco de Venezuela (BDV)', NULL, '2025-11-05 18:45:31'),
+(33, 35, 14, 48, 'pago_movil', 'pagado', 'Banco Venezolano de Crédito (BVC)', '3690', '2025-11-05 21:51:20');
 
 -- --------------------------------------------------------
 
@@ -192,16 +193,10 @@ CREATE TABLE `productos` (
 --
 
 INSERT INTO `productos` (`id_producto`, `nombre`, `descripcion`, `precio`, `cantidad`, `id_categoria`, `imagen`) VALUES
-(15, 'bulbasur', 'Bulbasaur, conocido como Fushigidane en Japón, es una especie ficticia de Pokémon de la franquicia Pokémon de Nintendo y Game Freak. Presentado por primera vez en los videojuegos Pokémon Rojo y Azul, fue creado por Atsuko Nishida y su diseño finalizado por Ken Sugimori.', 1500, 1, 2, 'img/prod_68f25d6e8f1da.jpeg'),
-(16, 'squirtle', 'Squirtle, conocido como Zenigame en Japón, es una especie de Pokémon de la franquicia Pokémon de Nintendo y Game Freak. Fue diseñado por Atsuko Nishida. Su nombre se cambió de Zenigame a Squirtle durante la localización de la serie al inglés para hacerlo más ingenioso y descriptivo.', 100, 1, 1, 'img/prod_68f25df1dedf6.jpeg'),
-(17, 'charmander', 'Charizard es una de las criaturas de la franquicia Pokémon. Se trata de un pokémon tipo fuego/volador, que aparece por primera vez en Pokémon Red y Blue, donde puede ser obtenido si el jugador elige ...', 777777, 2, 3, 'img/prod_68f25e8c232ed.jpeg'),
-(18, 'gotas para la nariz', 'Indicaciones: 2 a 3 gotas 3 veces al día en cada fosa nasal (cada 8 horas).  Advertencias: si los síntomas persisten y no se observa mejoría después de 2 a 3 días con el uso de este medicamento, suspéndase y consulte al médico. La administración prolongada de este producto puede causar nerviosismo, intranquilidad e insomnio.  ', 550, 10, 2, 'img/prod_68f26d30631cc.jpg'),
-(19, 'Dorixina Flex Lisina ', '+ Ciclobenzaprina 125mg/5mg Megalabs x 20 Comprimidos Ciclobenzaprina 125mg/5mg Megalabs x 20 Comprimidos Tratamiento coadyuvante de patologías que cursan con contractura muscular.', 3500, 5, 2, 'img/prod_68f38438edb86.jpg'),
-(20, 'Champu Farmatodo Reparador Macademia y Aguacate 500Ml', 'Regenera y tonifica el cuero cabelludo', 680, 1, 3, 'img/prod_68f38458116ea.jpg'),
-(21, 'Refresco Pepsi Cola x 1 Lt', 'Refresco sabor a cola negra 1lt', 198, 5, 1, 'img/prod_68f38472cb8b1.jpg'),
-(22, 'Diclofenac Potásico 50 mg Caja x 10 Tabletas', 'Composición: Diclofenac Potasico', 69.3, 5, 2, 'img/prod_68f3856ca3985.jpg'),
-(23, 'Galletas Le Biscuit Mini Piruetas x 150 gr', 'Mini barquillas rellenas de chocolate y avellanas.', 240, 5, 1, 'img/prod_68f38586b2cd9.jpg'),
-(24, 'Samba Fresa x 32 gr', 'Galleta cubierta rellena sabor a fresa', 136.72, 5, 1, 'img/prod_68f385ab03317.png');
+(35, 'eyo', 'farmaceutico', 40, 0, 3, 'img/prod_690b7d72507c5.jpg'),
+(36, 'qqe', 'eqwe', 40, 1, 3, 'img/prod_690b7d68893e4.jpg'),
+(37, 'Daniel', '13123', 89, 2, 2, 'img/prod_690b7d5a0762c.jpg'),
+(43, 'Reinaldo', 'farmaceutico', 12, 4, 2, 'img/prod_690bf68f0849b.jpg');
 
 -- --------------------------------------------------------
 
@@ -234,17 +229,6 @@ CREATE TABLE `telefonos_usuarios` (
   `numero_tlf` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `telefonos_usuarios`
---
-
-INSERT INTO `telefonos_usuarios` (`id_telefono`, `id_usuario`, `numero_tlf`) VALUES
-(4, 8, 2147483647),
-(5, 9, 2147483647),
-(7, 11, 2147483647),
-(8, 12, 2147483647),
-(9, 13, 2147483647);
-
 -- --------------------------------------------------------
 
 --
@@ -263,11 +247,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id_usuario`, `nombre`, `correo`, `contraseña_hash`) VALUES
-(8, 'Reinaldo ', 'reinaldopolanco14@gmail.com', '123'),
-(9, 'mondamonda', 'monda@gmail.com', '123'),
-(11, 'Barbara Antoima', 'm@gmail.com', '$2y$10$tiLPUFqYusZKHnJ6EF034.4eCtoBbzlrmPmx/uvC0OFBOF..qAW6a'),
-(12, 'Main Shaco', 'shaco@gmail.com', '$2y$10$SagoFjUykq/fw2kutW0bduFong5UWPlGHNEpqFk6Vp0dhqSB0yW76'),
-(13, 'miguel', 'mafr737@gmail.com', '$2y$10$0f1c.SQXmktCvrf8HrlluOBQDoKtSxk4rEAUx/rb63Ci5V/bAqqBu');
+(14, 'Reinaldo ', 'reinaldopolanco14@gmail.com', '$2y$10$h18zIEA8HmRAJM3nJ5JTM.8TtDzP/dpB3zUIt.t0/eeGj6bgyDBbq');
 
 -- --------------------------------------------------------
 
@@ -280,17 +260,8 @@ CREATE TABLE `ventas` (
   `id_usuario` int(11) NOT NULL,
   `codigo_unico` varchar(20) DEFAULT NULL,
   `estado` enum('apartado','pagado','finalizado','cancelado') DEFAULT 'apartado',
-  `metodo_pago` varchar(50) DEFAULT NULL,
-  `fecha_apartado` datetime DEFAULT NULL,
-  `fecha_pagado` datetime DEFAULT NULL
+  `fecha_apartado` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `ventas`
---
-
-INSERT INTO `ventas` (`id_venta`, `id_usuario`, `codigo_unico`, `estado`, `metodo_pago`, `fecha_apartado`, `fecha_pagado`) VALUES
-(1, 13, 'ygRcGd2p1N', 'apartado', NULL, '2025-10-30 20:47:54', NULL);
 
 --
 -- Índices para tablas volcadas
@@ -326,6 +297,13 @@ ALTER TABLE `detalles_carrito`
   ADD KEY `id_producto` (`id_producto`);
 
 --
+-- Indices de la tabla `detalles_pago`
+--
+ALTER TABLE `detalles_pago`
+  ADD PRIMARY KEY (`id_detalle_pago`),
+  ADD KEY `id_venta` (`id_venta`);
+
+--
 -- Indices de la tabla `detalles_pedido`
 --
 ALTER TABLE `detalles_pedido`
@@ -345,7 +323,8 @@ ALTER TABLE `direcciones_usuarios`
 --
 ALTER TABLE `pagos`
   ADD PRIMARY KEY (`id_pago`),
-  ADD KEY `id_venta` (`id_venta`);
+  ADD KEY `id_venta` (`id_venta`),
+  ADD KEY `id_usuario` (`id_usuario`);
 
 --
 -- Indices de la tabla `productos`
@@ -390,13 +369,13 @@ ALTER TABLE `ventas`
 -- AUTO_INCREMENT de la tabla `admin_trabajadores`
 --
 ALTER TABLE `admin_trabajadores`
-  MODIFY `id_trabajador` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `id_trabajador` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT de la tabla `carrito_compras`
 --
 ALTER TABLE `carrito_compras`
-  MODIFY `id_carrito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_carrito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT de la tabla `categorias`
@@ -408,49 +387,55 @@ ALTER TABLE `categorias`
 -- AUTO_INCREMENT de la tabla `detalles_carrito`
 --
 ALTER TABLE `detalles_carrito`
-  MODIFY `id_detalle_car` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_detalle_car` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+
+--
+-- AUTO_INCREMENT de la tabla `detalles_pago`
+--
+ALTER TABLE `detalles_pago`
+  MODIFY `id_detalle_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `detalles_pedido`
 --
 ALTER TABLE `detalles_pedido`
-  MODIFY `id_detallle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_detallle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT de la tabla `direcciones_usuarios`
 --
 ALTER TABLE `direcciones_usuarios`
-  MODIFY `id_direccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_direccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `pagos`
 --
 ALTER TABLE `pagos`
-  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT de la tabla `telefonos_usuarios`
 --
 ALTER TABLE `telefonos_usuarios`
-  MODIFY `id_telefono` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_telefono` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `ventas`
 --
 ALTER TABLE `ventas`
-  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- Restricciones para tablas volcadas
@@ -476,6 +461,12 @@ ALTER TABLE `detalles_carrito`
   ADD CONSTRAINT `detalles_carrito_ibfk_2` FOREIGN KEY (`id_producto`) REFERENCES `productos` (`id_producto`);
 
 --
+-- Filtros para la tabla `detalles_pago`
+--
+ALTER TABLE `detalles_pago`
+  ADD CONSTRAINT `detalles_pago_ibfk_1` FOREIGN KEY (`id_venta`) REFERENCES `ventas` (`id_venta`);
+
+--
 -- Filtros para la tabla `detalles_pedido`
 --
 ALTER TABLE `detalles_pedido`
@@ -492,7 +483,7 @@ ALTER TABLE `direcciones_usuarios`
 -- Filtros para la tabla `pagos`
 --
 ALTER TABLE `pagos`
-  ADD CONSTRAINT `pagos_ibfk_1` FOREIGN KEY (`id_venta`) REFERENCES `ventas` (`id_venta`);
+  ADD CONSTRAINT `pagos_ibfk_2` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`);
 
 --
 -- Filtros para la tabla `productos`

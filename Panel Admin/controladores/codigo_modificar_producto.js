@@ -54,7 +54,7 @@ $(document).ready(function () {
 
   $("#selectImageModificar").on("click", async function () {
     const { value: file } = await Swal.fire({
-      title: "Select image",
+      title: "Selecciona tu imagen",
       input: "file",
       inputAttributes: {
         accept: "image/*",
