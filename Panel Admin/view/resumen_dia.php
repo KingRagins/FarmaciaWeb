@@ -24,14 +24,11 @@ if (is_null($_SESSION['s_usuario'])) {
     />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Productos Disponibles</title>
+    <title>Resumen del dia</title>
 
     <!-- Custom fonts for this template-->
-    <link
-      href="vendor/fontawesome-free/css/all.min.css"
-      rel="stylesheet"
-      type="text/css"
-    />
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    
     <link
       href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
       rel="stylesheet"
@@ -72,10 +69,10 @@ if (is_null($_SESSION['s_usuario'])) {
             <span>Panel de Control</span></a
           >
         </li>
-        <li class="nav-item">
+        <li class="nav-item active">
           <a class="nav-link" href="resumen_dia.php">
            <i class="fa-regular fa-house"></i>
-            <span>Resumen del dia</span></a
+            <span>Resumen del dia </span></a
           >
         </li>
         <!-- Divider -->
@@ -133,16 +130,16 @@ if (is_null($_SESSION['s_usuario'])) {
             </div>
 
         <!-- pedidos productos y ventas-->
-                        <li class="nav-item active">
+                        <li class="nav-item">
                 <a class="nav-link" href="visualizar_productos.php">
-                    <i class="fa-solid fa-image"></i>
+                   <i class="fa-solid fa-image"></i>
                     <span>Productos</span></a>
                         </li>
 
           
                         <li class="nav-item">
                 <a class="nav-link" href="visualizar_pedidos.php">
-                   <i class="fa-solid fa-cart-arrow-down"></i>
+                    <i class="fa-solid fa-cart-arrow-down"></i>
                     <span>Pedidos</span></a>
                          </li>
 
@@ -184,7 +181,7 @@ if (is_null($_SESSION['s_usuario'])) {
               
              </li>
 
-             
+              
 
               <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -215,8 +212,8 @@ if (is_null($_SESSION['s_usuario'])) {
           }
             ?>
                 </span>
-                <!--se muestran los datos del usuario que inicio sesion-->
-                  
+
+                 
                 </a>
                 <!-- Dropdown - User Information -->
                 <div

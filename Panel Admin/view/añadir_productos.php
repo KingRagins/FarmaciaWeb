@@ -69,7 +69,12 @@ if (is_null($_SESSION['s_usuario'])) {
             <span>Panel de Control</span></a
           >
         </li>
-
+                        <li class="nav-item">
+          <a class="nav-link" href="resumen_dia.php">
+           <i class="fa-regular fa-house"></i>
+            <span>Resumen del dia </span></a
+          >
+        </li>
         <!-- Divider -->
         <hr class="sidebar-divider" />
 

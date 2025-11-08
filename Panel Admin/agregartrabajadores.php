@@ -55,8 +55,8 @@ require_once "view/añadir_trabajadores.php";
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="cedula">Cédula:</label>
-                    <input type="number" id="cedula" name="cedula" min="0" class="form-control" placeholder="Cédula">
+                    <label for="cedula">Cédula:</label >
+                    <input type="number" id="cedula" name="cedula" min="0" class="form-control" placeholder="Cédula" >
                 </div>
             </div>
         </div>
@@ -127,4 +127,23 @@ require_once "view/añadir_trabajadores.php";
     <link rel="stylesheet" href="offline_service/fontawesome-free/css/all.min.css">
 </div>
 
+<style>
+    /* Para Chrome, Safari, Edge, Opera */
+#cedula::-webkit-outer-spin-button,
+#cedula::-webkit-inner-spin-button,
+#telefono::-webkit-outer-spin-button,
+#telefono::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 
+/* Para Firefox */
+#cedula, #telefono {
+    -moz-appearance: textfield;
+}
+
+/* Para todos los navegadores modernos */
+#cedula, #telefono {
+    appearance: textfield;
+}
+</style>

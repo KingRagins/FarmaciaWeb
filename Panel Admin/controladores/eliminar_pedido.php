@@ -27,6 +27,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         $conexion->beginTransaction(); // ← Inicia transacción
 
+        // ========== NUEVO: OBTENER PRODUCTOS Y CANTIDADES PARA DEVOLVER STOCK ==========
+        $sql_obtener_detalles = "SELECT id_producto, dp_cantidad FROM detalles_pedido WHERE id_venta = :id_venta";
+        $stmt_obtener_detalles = $conexion->prepare($sql_obtener_detalles);
+        $stmt_obtener_detalles->bindParam(':id_venta', $id_venta, PDO::PARAM_INT);
+        $stmt_obtener_detalles->execute();
+        $detalles_pedido = $stmt_obtener_detalles->fetchAll(PDO::FETCH_ASSOC);
+
+        // ========== NUEVO: DEVOLVER STOCK A CADA PRODUCTO ==========
+        foreach ($detalles_pedido as $detalle) {
+            $sql_devolver_stock = "UPDATE productos SET cantidad = cantidad + :cantidad WHERE id_producto = :id_producto";
+            $stmt_devolver_stock = $conexion->prepare($sql_devolver_stock);
+            $stmt_devolver_stock->bindParam(':cantidad', $detalle['dp_cantidad'], PDO::PARAM_INT);
+            $stmt_devolver_stock->bindParam(':id_producto', $detalle['id_producto'], PDO::PARAM_INT);
+            $stmt_devolver_stock->execute();
+            
+            // Opcional: Log para debugging
+            error_log("Stock devuelto - Producto ID: {$detalle['id_producto']}, Cantidad: {$detalle['dp_cantidad']}");
+        }
+
         // 1. Eliminar detalles del pedido
         $sql_detalles = "DELETE FROM detalles_pedido WHERE id_venta = :id_venta";
         $stmt_detalles = $conexion->prepare($sql_detalles);
@@ -48,6 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } catch (Exception $e) {
         $conexion->rollBack(); // ← Deshace cambios
         echo "error: " . $e->getMessage();
+        error_log("Error en eliminar_pedido.php: " . $e->getMessage());
     }
 } else {
     echo "error: Método no permitido.";

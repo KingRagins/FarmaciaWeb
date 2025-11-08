@@ -6,6 +6,7 @@ $apellido = isset($_SESSION['s_apellido']) ? $_SESSION['s_apellido'] : '';
 if (is_null($_SESSION['s_usuario'])) {
     header("Location: ../logins/login_admin.php");
     exit();
+    
 }
 
 ?>
@@ -72,7 +73,12 @@ if (is_null($_SESSION['s_usuario'])) {
             <span>Panel de Control</span></a
           >
         </li>
-
+        <li class="nav-item">
+          <a class="nav-link" href="resumen_dia.php">
+           <i class="fa-regular fa-house"></i>
+            <span>Resumen del dia</span></a
+          >
+        </li>
         <!-- Divider -->
         <hr class="sidebar-divider" />
 
@@ -250,6 +256,7 @@ if (is_null($_SESSION['s_usuario'])) {
                     <a class="btn btn-primary" href="../logins/logouts/logout.php">Logout</a>
                     <!--copiar logout en todas las vistas-->
                     <!-- ventanita logout usuario-->
+                    
                 </div>
             </div>
         </div>

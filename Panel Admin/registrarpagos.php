@@ -7,6 +7,15 @@ session_start();
 if (!isset($_SESSION['s_usuario']) || empty($_SESSION['s_usuario'])) {
     header("Location: /Farmacia/logins/login_admin.php");
     exit();
+    // OBTENER TIPO DE CAMBIO DEL DÍA
+$tipo_cambio = 50.00;
+if (
+    isset($_SESSION['tipo_cambio']) && 
+    isset($_SESSION['tipo_cambio_timestamp']) &&
+    (time() - $_SESSION['tipo_cambio_timestamp']) < 43200
+) {
+    $tipo_cambio = $_SESSION['tipo_cambio'];
+}
 }
 
 // 2. Cabeceras HTTP para prevenir el caché del navegador
@@ -44,6 +53,7 @@ require_once "view/modificar_pagos.php";
 </div>
 
 
+
 <script src="../logins/jquery/jquery-3.3.1.min.js"></script>
 <script src="../logins/bootstrap/js/bootstrap.min.js"></script>
 <script src="../logins/popper/popper.min.js"></script>
@@ -63,3 +73,23 @@ require_once "view/modificar_pagos.php";
     <script src="offline_service/boostrap/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="offline_service/fontawesome-free/css/all.min.css">
 </div>
+<style>
+    /* Para Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Para Firefox */
+input {
+    -moz-appearance: textfield;
+}
+
+/* Para todos los navegadores modernos */
+input {
+    appearance: textfield;
+}
+</style>

@@ -7,11 +7,11 @@ $(document).ready(function () {
 
   $("#selectImage").on("click", async function () {
     const { value: file } = await Swal.fire({
-      title: "Selecciona tu imagen",
+      title: "Select image",
       input: "file",
       inputAttributes: {
         accept: "image/*",
-        "aria-label": "Selecciona una imagen para el producto",
+        "aria-label": "Upload your product picture",
       },
     });
 
@@ -19,9 +19,9 @@ $(document).ready(function () {
       const reader = new FileReader();
       reader.onload = (e) => {
         Swal.fire({
-          title: "Tu imagen seleccionada",
+          title: "Your uploaded picture",
           imageUrl: e.target.result,
-          imageAlt: "Imagen del producto",
+          imageAlt: "The uploaded picture",
         });
         selectedFile = file;
         $("#fileName").text(file.name);
