@@ -55,7 +55,7 @@ require_once "view/añadir_productos.php";
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="precio">Precio:</label>
-                    <input type="text" id="precio" name="precio" class="form-control" placeholder="Precio del producto">
+                    <input type="number" id="precio" name="precio" min="0" class="form-control" placeholder="Precio del producto">
                 </div>
             </div>
         </div>
@@ -63,7 +63,7 @@ require_once "view/añadir_productos.php";
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="cantidad">Cantidad:</label>
-                    <input type="number" id="cantidad" name="cantidad" class="form-control" placeholder="Cantidad del producto">
+                    <input type="number" id="cantidad" name="cantidad" min="0" class="form-control" placeholder="Cantidad del producto">
                 </div>
             </div>
             <div class="col-md-6">

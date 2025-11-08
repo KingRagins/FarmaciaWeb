@@ -56,7 +56,7 @@ require_once "view/añadir_trabajadores.php";
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="cedula">Cédula:</label>
-                    <input type="text" id="cedula" name="cedula" class="form-control" placeholder="Cédula">
+                    <input type="number" id="cedula" name="cedula" min="0" class="form-control" placeholder="Cédula">
                 </div>
             </div>
         </div>
@@ -65,7 +65,7 @@ require_once "view/añadir_trabajadores.php";
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="telefono">Número de teléfono:</label>
-                    <input type="text" id="telefono" name="telefono" class="form-control" placeholder="Número de teléfono">
+                    <input type="number" id="telefono" name="telefono" min="0" class="form-control" placeholder="Número de teléfono">
                 </div>
             </div>
             <div class="col-md-6">

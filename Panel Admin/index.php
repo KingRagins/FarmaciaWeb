@@ -126,7 +126,7 @@ require_once "view/parte_superior.php";
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="cedula_modificar">Cédula:</label>
-                                    <input type="text" id="cedula_modificar" name="cedula" class="form-control" placeholder="Cédula">
+                                    <input type="number" id="cedula_modificar" name="cedula" min="0" class="form-control" placeholder="Cédula">
                                 </div>
                             </div>
                         </div>
@@ -134,7 +134,7 @@ require_once "view/parte_superior.php";
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="telefono_modificar">Número de teléfono:</label>
-                                    <input type="text" id="telefono_modificar" name="telefono" class="form-control" placeholder="Número de teléfono">
+                                    <input type="number" id="telefono_modificar" name="telefono" min="0"class="form-control" placeholder="Número de teléfono">
                                 </div>
                             </div>
                             <div class="col-md-6">

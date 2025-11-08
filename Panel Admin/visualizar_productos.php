@@ -150,7 +150,7 @@ require_once "view/verproductos.php";
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="precio_modificar">Precio:</label>
-                                    <input type="text" id="precio_modificar" name="precio" class="form-control" placeholder="Precio Del Producto">
+                                    <input type="number" id="precio_modificar" name="precio" min="0"  class="form-control" placeholder="Precio Del Producto">
                                 </div>
                             </div>
                         </div>
@@ -158,7 +158,7 @@ require_once "view/verproductos.php";
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="cantidad_modificar">Cantidad:</label>
-                                    <input type="number" id="cantidad_modificar" name="cantidad" class="form-control" placeholder="Cantidad Del Producto">
+                                    <input type="number" id="cantidad_modificar" name="cantidad" min="0"  class="form-control" placeholder="Cantidad Del Producto">
                                 </div>
                             </div>
                             <div class="col-md-6">
