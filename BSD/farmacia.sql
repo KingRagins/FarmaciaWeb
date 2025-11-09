@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-11-2025 a las 18:05:18
+-- Tiempo de generación: 09-11-2025 a las 03:07:45
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -44,7 +44,7 @@ CREATE TABLE `admin_trabajadores` (
 --
 
 INSERT INTO `admin_trabajadores` (`id_trabajador`, `id_rol`, `nombre`, `apellido`, `cedula`, `numero_de_telefono`, `nombre_de_usuario`, `correo_electronico`, `contraseña`) VALUES
-(48, 2, 'Reinaldo', 'Polanco', '27463791', '04129837722', 'reipola17', 'reipola@gmail.com', '$2y$10$5OgbEx63kyfUscbj6KR40uGfEY4NahQsGzZblhvxp/vv4TUPl.HgO'),
+(48, 1, 'Reinaldo', 'Polanco', '27463791', '04129837722', 'reipola', 'reipola@gmail.com', '$2y$10$5OgbEx63kyfUscbj6KR40uGfEY4NahQsGzZblhvxp/vv4TUPl.HgO'),
 (49, 1, 'miguel', 'flores', '30667634', '04149027363', 'legumin', 'mafr737@gmail.com', '$2y$10$QfLfkVxaovhC1LKnciT42ei9QI2sX6wBwK3HBACG.r1fqbDloSHVO'),
 (50, 2, 'miguel', 'a', '31860457', '04149027563', 'usuario', 'maf737@gmail.com', '$2y$10$CbOBRZXk92ijBuecaHyLWuELJnKbbWTear8O/4qILdAJw/WvJAPYK');
 
@@ -154,6 +154,7 @@ CREATE TABLE `pagos` (
   `id_venta` int(11) NOT NULL,
   `id_usuario` int(11) DEFAULT NULL,
   `monto_unico` float NOT NULL,
+  `tipo_cambio_usd` decimal(10,2) DEFAULT NULL,
   `metodo_pago` enum('divisas','bolivares','tarjeta','pago_movil') NOT NULL,
   `estado_pago` enum('pendiente','pagado','rechazado','') NOT NULL,
   `banco` varchar(100) DEFAULT NULL,
@@ -165,19 +166,9 @@ CREATE TABLE `pagos` (
 -- Volcado de datos para la tabla `pagos`
 --
 
-INSERT INTO `pagos` (`id_pago`, `id_venta`, `id_usuario`, `monto_unico`, `metodo_pago`, `estado_pago`, `banco`, `referencia`, `fecha_pago`) VALUES
-(17, 15, 14, 40, 'divisas', 'pagado', NULL, NULL, '2025-11-02 12:22:40'),
-(18, 16, 14, 40, 'bolivares', 'pagado', NULL, NULL, '2025-11-02 12:22:57'),
-(19, 17, 14, 40, 'tarjeta', 'pagado', 'Banco del Tesoro', NULL, '2025-11-02 12:23:17'),
-(20, 18, 14, 40, 'pago_movil', 'pagado', 'Banco Mercantil', '4590', '2025-11-02 12:23:39'),
-(21, 19, 14, 69, 'pago_movil', 'pagado', 'Banco Nacional de Crédito (BNC)', '8742', '2025-11-02 12:37:44'),
-(22, 20, 14, 69, 'bolivares', 'pagado', NULL, NULL, '2025-11-02 12:38:28'),
-(23, 21, 14, 250, 'divisas', 'pagado', NULL, NULL, '2025-11-02 12:40:56'),
-(24, 22, 15, 12250, 'tarjeta', 'pagado', 'Banco de Venezuela (BDV)', NULL, '2025-11-02 13:49:23'),
-(25, 23, 15, 250, 'tarjeta', 'pagado', 'Banco Venezolano de Crédito (BVC)', NULL, '2025-11-08 10:38:19'),
-(26, 25, 15, 16000, 'tarjeta', 'pagado', 'Banco de Venezuela (BDV)', NULL, '2025-11-08 10:52:47'),
-(27, 26, 15, 4430, 'tarjeta', 'pagado', 'Banco Nacional de Crédito (BNC)', NULL, '2025-11-08 12:15:16'),
-(28, 29, 15, 5440, 'divisas', 'pagado', NULL, NULL, '2025-11-08 13:03:25');
+INSERT INTO `pagos` (`id_pago`, `id_venta`, `id_usuario`, `monto_unico`, `tipo_cambio_usd`, `metodo_pago`, `estado_pago`, `banco`, `referencia`, `fecha_pago`) VALUES
+(29, 31, 14, 300, 250.00, 'divisas', 'pagado', NULL, NULL, '2025-11-08 21:59:11'),
+(30, 30, 14, 300, 250.00, 'tarjeta', 'pagado', 'Banesco', NULL, '2025-11-08 22:02:49');
 
 -- --------------------------------------------------------
 
@@ -209,7 +200,7 @@ INSERT INTO `productos` (`id_producto`, `nombre`, `descripcion`, `precio`, `cant
 (33, 'Gasa Estéril 4x4 Compomedica Sobre x 2 und', 'Gasa estéril 100% algodón. Bordes doblados para evitar el desprendimiento de hilos. Tejido de alta absorción que no deja pelusa ni residuos. Posee una textura suave ideal para la limpieza de heridas.', 70, 10, 2, 'img/prod_690f5cb676b82.jpg'),
 (34, 'Azitromicina 375ml', 'Saver Elmor Polvo Para Suspensión x 200mg', 1585, 8, 2, 'img/prod_690f5d0f87919.jpg'),
 (35, 'Flavoxato Clorhidrato 200 mg', 'Genurin Elmor Caja x 10 Gragea', 1462, 5, 2, 'img/prod_690f5d39d577e.png'),
-(36, 'Albicar Albendazol 200Mg', 'Elmor Caja x 2 Tabletas', 300, 5, 2, 'img/prod_690f5d8e4d0b9.png'),
+(36, 'Albicar Albendazol 200Mg', 'Elmor Caja x 2 Tabletas', 300, 3, 2, 'img/prod_690f5d8e4d0b9.png'),
 (37, 'Refresco Coca-Cola Sabor Original 2 Lt', 'Bebida gaseosa con sabor a cola negra en presentación de 2 L. Ideal para compartir y acompañar tus comidas, celebrar la vida y abrazar la magia de cada momento.', 300, 145, 1, 'img/prod_690f5dc8c8521.jpg'),
 (38, 'Refresco Frescolita 2 Lt', 'Bebida gaseosa con sabor a colita en presentación de 2 L. Ideal para refrescar y compartir tus comidas y momentos especiales con su perfecto balance de burbujas, color único, sabor inconfundible y aroma original.', 380, 123, 1, 'img/prod_690f5e128ae43.png'),
 (39, 'Refresco Fanta Toronja 2 Lt', 'refresco', 450, 33, 1, 'img/prod_690f5ea2584cd.jpg'),
@@ -423,7 +414,7 @@ ALTER TABLE `admin_trabajadores`
 -- AUTO_INCREMENT de la tabla `carrito_compras`
 --
 ALTER TABLE `carrito_compras`
-  MODIFY `id_carrito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id_carrito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT de la tabla `categorias`
@@ -435,7 +426,7 @@ ALTER TABLE `categorias`
 -- AUTO_INCREMENT de la tabla `detalles_carrito`
 --
 ALTER TABLE `detalles_carrito`
-  MODIFY `id_detalle_car` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `id_detalle_car` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT de la tabla `detalles_pago`
@@ -447,7 +438,7 @@ ALTER TABLE `detalles_pago`
 -- AUTO_INCREMENT de la tabla `detalles_pedido`
 --
 ALTER TABLE `detalles_pedido`
-  MODIFY `id_detallle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id_detallle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT de la tabla `direcciones_usuarios`
@@ -459,7 +450,7 @@ ALTER TABLE `direcciones_usuarios`
 -- AUTO_INCREMENT de la tabla `pagos`
 --
 ALTER TABLE `pagos`
-  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
@@ -483,7 +474,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `ventas`
 --
 ALTER TABLE `ventas`
-  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- Restricciones para tablas volcadas

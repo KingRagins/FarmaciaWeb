@@ -2,6 +2,9 @@
 // Inicia la sesión
 session_start();
 
+date_default_timezone_set('America/Caracas');
+$fecha_hoy = date('d/m/Y');
+
 // 1. Lógica de validación de sesión
 if (!isset($_SESSION['s_usuario']) || empty($_SESSION['s_usuario'])) {
     header("Location: /Farmacia/logins/login_admin.php");
