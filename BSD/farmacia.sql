@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-11-2025 a las 03:07:45
+-- Tiempo de generación: 10-11-2025 a las 17:39:13
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -46,7 +46,8 @@ CREATE TABLE `admin_trabajadores` (
 INSERT INTO `admin_trabajadores` (`id_trabajador`, `id_rol`, `nombre`, `apellido`, `cedula`, `numero_de_telefono`, `nombre_de_usuario`, `correo_electronico`, `contraseña`) VALUES
 (48, 1, 'Reinaldo', 'Polanco', '27463791', '04129837722', 'reipola', 'reipola@gmail.com', '$2y$10$5OgbEx63kyfUscbj6KR40uGfEY4NahQsGzZblhvxp/vv4TUPl.HgO'),
 (49, 1, 'miguel', 'flores', '30667634', '04149027363', 'legumin', 'mafr737@gmail.com', '$2y$10$QfLfkVxaovhC1LKnciT42ei9QI2sX6wBwK3HBACG.r1fqbDloSHVO'),
-(50, 2, 'miguel', 'a', '31860457', '04149027563', 'usuario', 'maf737@gmail.com', '$2y$10$CbOBRZXk92ijBuecaHyLWuELJnKbbWTear8O/4qILdAJw/WvJAPYK');
+(50, 2, 'miguel', 'a', '31860457', '04149027563', 'usuario', 'maf737@gmail.com', '$2y$10$CbOBRZXk92ijBuecaHyLWuELJnKbbWTear8O/4qILdAJw/WvJAPYK'),
+(51, 2, 'Reinaldo', 'Polanco', '21312424', '04143800216', 'reipola17', 'daniel@gmail.com', '$2y$10$.0I3er88JDSBe54YGFa1Au1KlKVZnL4wmTQMA24FSHN2yBYP9Xbn6');
 
 -- --------------------------------------------------------
 
@@ -141,7 +142,8 @@ CREATE TABLE `direcciones_usuarios` (
 --
 
 INSERT INTO `direcciones_usuarios` (`id_direccion`, `id_usuario`, `direccion`) VALUES
-(8, 15, 'los teques');
+(8, 15, 'los teques'),
+(10, 17, 'Los Teques');
 
 -- --------------------------------------------------------
 
@@ -167,8 +169,9 @@ CREATE TABLE `pagos` (
 --
 
 INSERT INTO `pagos` (`id_pago`, `id_venta`, `id_usuario`, `monto_unico`, `tipo_cambio_usd`, `metodo_pago`, `estado_pago`, `banco`, `referencia`, `fecha_pago`) VALUES
-(29, 31, 14, 300, 250.00, 'divisas', 'pagado', NULL, NULL, '2025-11-08 21:59:11'),
-(30, 30, 14, 300, 250.00, 'tarjeta', 'pagado', 'Banesco', NULL, '2025-11-08 22:02:49');
+(48, 34, 17, 360, 250.00, 'divisas', 'pagado', NULL, NULL, '2025-11-10 11:18:17'),
+(58, 35, 17, 360, 250.00, 'tarjeta', 'pagado', 'Banesco', NULL, '2025-11-10 12:13:59'),
+(59, 36, 17, 380, 250.00, 'divisas', 'pagado', NULL, NULL, '2025-11-10 12:19:44');
 
 -- --------------------------------------------------------
 
@@ -193,14 +196,14 @@ CREATE TABLE `productos` (
 INSERT INTO `productos` (`id_producto`, `nombre`, `descripcion`, `precio`, `cantidad`, `id_categoria`, `imagen`) VALUES
 (19, 'Dorixina Flex Lisina ', '+ Ciclobenzaprina 125mg/5mg Megalabs x 20 Comprimidos Ciclobenzaprina 125mg/5mg Megalabs x 20 Comprimidos Tratamiento coadyuvante de patologías que cursan con contractura muscular.', 250, 34, 2, 'img/prod_68f38438edb86.jpg'),
 (28, 'Acetaminofén ', '+ clorfenamina maleato 500mg/4mg X10 tabletas CLORACE', 200, 20, 2, 'img/prod_690f5b58b5a0f.jpg'),
-(29, 'Acetaminofen 650mg', '10 comprimidos genven', 360, 47, 2, 'img/prod_690f5bb826217.jpg'),
+(29, 'Acetaminofen 650mg', '10 comprimidos genven', 360, 45, 2, 'img/prod_690f5bb826217.jpg'),
 (30, 'Ibuprofeno 400mg', 'x 10tab BRUGESIC ', 550, 30, 2, 'img/prod_690f5bf3bc19e.png'),
 (31, 'Diclofenac Potásico 50 mg', 'Medigen Oftalmi Caja x 10 Tabletas', 100, 8, 2, 'img/prod_690f5c31631f8.jpg'),
-(32, 'Acetaminofén 650 mg Atamel', 'Forte Calox Caja x 10 Tabletas Atamel Forte tratamiento sintomàtico de la fiebre y del dolor de leve intensidad.', 380, 15, 2, 'img/prod_690f5c6448b7a.jpg'),
+(32, 'Acetaminofén 650 mg Atamel', 'Forte Calox Caja x 10 Tabletas Atamel Forte tratamiento sintomàtico de la fiebre y del dolor de leve intensidad.', 380, 13, 2, 'img/prod_690f5c6448b7a.jpg'),
 (33, 'Gasa Estéril 4x4 Compomedica Sobre x 2 und', 'Gasa estéril 100% algodón. Bordes doblados para evitar el desprendimiento de hilos. Tejido de alta absorción que no deja pelusa ni residuos. Posee una textura suave ideal para la limpieza de heridas.', 70, 10, 2, 'img/prod_690f5cb676b82.jpg'),
 (34, 'Azitromicina 375ml', 'Saver Elmor Polvo Para Suspensión x 200mg', 1585, 8, 2, 'img/prod_690f5d0f87919.jpg'),
-(35, 'Flavoxato Clorhidrato 200 mg', 'Genurin Elmor Caja x 10 Gragea', 1462, 5, 2, 'img/prod_690f5d39d577e.png'),
-(36, 'Albicar Albendazol 200Mg', 'Elmor Caja x 2 Tabletas', 300, 3, 2, 'img/prod_690f5d8e4d0b9.png'),
+(35, 'Flavoxato Clorhidrato 200 mg', 'Genurin Elmor Caja x 10 Gragea', 1462, 7, 2, 'img/prod_690f5d39d577e.png'),
+(36, 'Albicar Albendazol 200Mg', 'Elmor Caja x 2 Tabletas', 300, 2, 2, 'img/prod_690f5d8e4d0b9.png'),
 (37, 'Refresco Coca-Cola Sabor Original 2 Lt', 'Bebida gaseosa con sabor a cola negra en presentación de 2 L. Ideal para compartir y acompañar tus comidas, celebrar la vida y abrazar la magia de cada momento.', 300, 145, 1, 'img/prod_690f5dc8c8521.jpg'),
 (38, 'Refresco Frescolita 2 Lt', 'Bebida gaseosa con sabor a colita en presentación de 2 L. Ideal para refrescar y compartir tus comidas y momentos especiales con su perfecto balance de burbujas, color único, sabor inconfundible y aroma original.', 380, 123, 1, 'img/prod_690f5e128ae43.png'),
 (39, 'Refresco Fanta Toronja 2 Lt', 'refresco', 450, 33, 1, 'img/prod_690f5ea2584cd.jpg'),
@@ -257,7 +260,7 @@ INSERT INTO `roles` (`id_rol`, `nombre_rol`) VALUES
 CREATE TABLE `telefonos_usuarios` (
   `id_telefono` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
-  `numero_tlf` int(11) NOT NULL
+  `numero_tlf` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -265,7 +268,8 @@ CREATE TABLE `telefonos_usuarios` (
 --
 
 INSERT INTO `telefonos_usuarios` (`id_telefono`, `id_usuario`, `numero_tlf`) VALUES
-(11, 15, 2147483647);
+(11, 15, '2147483647'),
+(13, 17, '2147483647');
 
 -- --------------------------------------------------------
 
@@ -285,8 +289,8 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id_usuario`, `nombre`, `correo`, `contraseña_hash`) VALUES
-(14, 'Reinaldo ', 'reinaldopolanco14@gmail.com', '$2y$10$h18zIEA8HmRAJM3nJ5JTM.8TtDzP/dpB3zUIt.t0/eeGj6bgyDBbq'),
-(15, 'Barbara Antoima', 'mafr737@gmail.com', '$2y$10$qh39hRM22rVLA9vWC6cyQujs3/Ab5jmIhywqhIcc2EoaKe9P3LAo.');
+(15, 'Barbara Antoima', 'mafr737@gmail.com', '$2y$10$qh39hRM22rVLA9vWC6cyQujs3/Ab5jmIhywqhIcc2EoaKe9P3LAo.'),
+(17, 'Reinaldo ', 'reinaldopolanco14@gmail.com', '$2y$10$86W.zcDqHjFYbY8m8a.MBuFfaJa54Fwqfd.LSnORGzNvsPgPfWssK');
 
 -- --------------------------------------------------------
 
@@ -408,13 +412,13 @@ ALTER TABLE `ventas`
 -- AUTO_INCREMENT de la tabla `admin_trabajadores`
 --
 ALTER TABLE `admin_trabajadores`
-  MODIFY `id_trabajador` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `id_trabajador` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT de la tabla `carrito_compras`
 --
 ALTER TABLE `carrito_compras`
-  MODIFY `id_carrito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id_carrito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT de la tabla `categorias`
@@ -426,7 +430,7 @@ ALTER TABLE `categorias`
 -- AUTO_INCREMENT de la tabla `detalles_carrito`
 --
 ALTER TABLE `detalles_carrito`
-  MODIFY `id_detalle_car` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `id_detalle_car` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT de la tabla `detalles_pago`
@@ -438,19 +442,19 @@ ALTER TABLE `detalles_pago`
 -- AUTO_INCREMENT de la tabla `detalles_pedido`
 --
 ALTER TABLE `detalles_pedido`
-  MODIFY `id_detallle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id_detallle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT de la tabla `direcciones_usuarios`
 --
 ALTER TABLE `direcciones_usuarios`
-  MODIFY `id_direccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_direccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `pagos`
 --
 ALTER TABLE `pagos`
-  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
@@ -462,19 +466,19 @@ ALTER TABLE `productos`
 -- AUTO_INCREMENT de la tabla `telefonos_usuarios`
 --
 ALTER TABLE `telefonos_usuarios`
-  MODIFY `id_telefono` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_telefono` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `ventas`
 --
 ALTER TABLE `ventas`
-  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- Restricciones para tablas volcadas
