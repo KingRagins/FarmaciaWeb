@@ -6,7 +6,7 @@ header("Pragma: no-cache");
 header("Expires: 0");
 include("../config/conexion.php");
 
-session_start();
+
 
 // Verifica si el usuario está logueado
 if (!isset($_SESSION['id_usuario'])) {

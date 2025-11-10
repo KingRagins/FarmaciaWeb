@@ -60,7 +60,7 @@ $(document).ready(function () {
             icon: "success",
             draggable: true,
           }).then((result) => {
-            window.location.href = "../Panel Admin/index.php";
+            window.location.href = "../Panel Admin/resumen_dia.php";
           });
         } else {
           // Mensaje de error genérico si algo inesperado ocurre
