@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-11-2025 a las 17:39:13
+-- Tiempo de generación: 11-11-2025 a las 00:08:08
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -143,7 +143,8 @@ CREATE TABLE `direcciones_usuarios` (
 
 INSERT INTO `direcciones_usuarios` (`id_direccion`, `id_usuario`, `direccion`) VALUES
 (8, 15, 'los teques'),
-(10, 17, 'Los Teques');
+(10, 17, 'Los Teques'),
+(11, 18, 'Los Teques');
 
 -- --------------------------------------------------------
 
@@ -171,7 +172,20 @@ CREATE TABLE `pagos` (
 INSERT INTO `pagos` (`id_pago`, `id_venta`, `id_usuario`, `monto_unico`, `tipo_cambio_usd`, `metodo_pago`, `estado_pago`, `banco`, `referencia`, `fecha_pago`) VALUES
 (48, 34, 17, 360, 250.00, 'divisas', 'pagado', NULL, NULL, '2025-11-10 11:18:17'),
 (58, 35, 17, 360, 250.00, 'tarjeta', 'pagado', 'Banesco', NULL, '2025-11-10 12:13:59'),
-(59, 36, 17, 380, 250.00, 'divisas', 'pagado', NULL, NULL, '2025-11-10 12:19:44');
+(59, 36, 17, 380, 250.00, 'divisas', 'pagado', NULL, NULL, '2025-11-10 12:19:44'),
+(60, 0, NULL, 0, 350.00, '', '', NULL, NULL, '2025-11-10 18:07:20'),
+(61, 0, NULL, 0, 350.00, '', '', NULL, NULL, '2025-11-10 18:07:24'),
+(62, 0, NULL, 0, 300.00, '', '', NULL, NULL, '2025-11-10 18:11:04'),
+(63, 0, NULL, 0, 250.00, '', '', NULL, NULL, '2025-11-10 18:16:16'),
+(64, 0, NULL, 0, 300.00, '', '', NULL, NULL, '2025-11-10 18:18:34'),
+(65, 38, 18, 740, 300.00, 'divisas', 'pagado', NULL, NULL, '2025-11-10 18:18:51'),
+(66, 44, 17, 1200, 300.00, 'bolivares', 'pagado', NULL, NULL, '2025-11-10 18:23:40'),
+(67, 43, 17, 300, 300.00, 'tarjeta', 'pagado', 'Banco del Tesoro', NULL, '2025-11-10 18:24:01'),
+(68, 42, 17, 100, 300.00, 'pago_movil', 'pagado', 'Banesco', '7843', '2025-11-10 18:24:13'),
+(69, 41, 17, 1462, 300.00, 'tarjeta', 'pagado', 'Banco de Venezuela (BDV)', NULL, '2025-11-10 18:24:25'),
+(70, 40, 17, 200, 300.00, 'tarjeta', 'pagado', 'Banco de Venezuela (BDV)', NULL, '2025-11-10 18:24:34'),
+(71, 39, 17, 380, 300.00, 'tarjeta', 'pagado', 'Banco de Venezuela (BDV)', NULL, '2025-11-10 18:24:42'),
+(72, 37, 18, 300, 300.00, 'pago_movil', 'pagado', 'Banco de Venezuela (BDV)', '7631', '2025-11-10 18:24:56');
 
 -- --------------------------------------------------------
 
@@ -195,21 +209,21 @@ CREATE TABLE `productos` (
 
 INSERT INTO `productos` (`id_producto`, `nombre`, `descripcion`, `precio`, `cantidad`, `id_categoria`, `imagen`) VALUES
 (19, 'Dorixina Flex Lisina ', '+ Ciclobenzaprina 125mg/5mg Megalabs x 20 Comprimidos Ciclobenzaprina 125mg/5mg Megalabs x 20 Comprimidos Tratamiento coadyuvante de patologías que cursan con contractura muscular.', 250, 34, 2, 'img/prod_68f38438edb86.jpg'),
-(28, 'Acetaminofén ', '+ clorfenamina maleato 500mg/4mg X10 tabletas CLORACE', 200, 20, 2, 'img/prod_690f5b58b5a0f.jpg'),
+(28, 'Acetaminofén ', '+ clorfenamina maleato 500mg/4mg X10 tabletas CLORACE', 200, 19, 2, 'img/prod_690f5b58b5a0f.jpg'),
 (29, 'Acetaminofen 650mg', '10 comprimidos genven', 360, 45, 2, 'img/prod_690f5bb826217.jpg'),
 (30, 'Ibuprofeno 400mg', 'x 10tab BRUGESIC ', 550, 30, 2, 'img/prod_690f5bf3bc19e.png'),
 (31, 'Diclofenac Potásico 50 mg', 'Medigen Oftalmi Caja x 10 Tabletas', 100, 8, 2, 'img/prod_690f5c31631f8.jpg'),
-(32, 'Acetaminofén 650 mg Atamel', 'Forte Calox Caja x 10 Tabletas Atamel Forte tratamiento sintomàtico de la fiebre y del dolor de leve intensidad.', 380, 13, 2, 'img/prod_690f5c6448b7a.jpg'),
+(32, 'Acetaminofén 650 mg Atamel', 'Forte Calox Caja x 10 Tabletas Atamel Forte tratamiento sintomàtico de la fiebre y del dolor de leve intensidad.', 380, 12, 2, 'img/prod_690f5c6448b7a.jpg'),
 (33, 'Gasa Estéril 4x4 Compomedica Sobre x 2 und', 'Gasa estéril 100% algodón. Bordes doblados para evitar el desprendimiento de hilos. Tejido de alta absorción que no deja pelusa ni residuos. Posee una textura suave ideal para la limpieza de heridas.', 70, 10, 2, 'img/prod_690f5cb676b82.jpg'),
 (34, 'Azitromicina 375ml', 'Saver Elmor Polvo Para Suspensión x 200mg', 1585, 8, 2, 'img/prod_690f5d0f87919.jpg'),
-(35, 'Flavoxato Clorhidrato 200 mg', 'Genurin Elmor Caja x 10 Gragea', 1462, 7, 2, 'img/prod_690f5d39d577e.png'),
-(36, 'Albicar Albendazol 200Mg', 'Elmor Caja x 2 Tabletas', 300, 2, 2, 'img/prod_690f5d8e4d0b9.png'),
+(35, 'Flavoxato Clorhidrato 200 mg', 'Genurin Elmor Caja x 10 Gragea', 1462, 6, 2, 'img/prod_690f5d39d577e.png'),
+(36, 'Albicar Albendazol 200Mg', 'Elmor Caja x 2 Tabletas', 300, 10, 2, 'img/prod_690f5d8e4d0b9.png'),
 (37, 'Refresco Coca-Cola Sabor Original 2 Lt', 'Bebida gaseosa con sabor a cola negra en presentación de 2 L. Ideal para compartir y acompañar tus comidas, celebrar la vida y abrazar la magia de cada momento.', 300, 145, 1, 'img/prod_690f5dc8c8521.jpg'),
 (38, 'Refresco Frescolita 2 Lt', 'Bebida gaseosa con sabor a colita en presentación de 2 L. Ideal para refrescar y compartir tus comidas y momentos especiales con su perfecto balance de burbujas, color único, sabor inconfundible y aroma original.', 380, 123, 1, 'img/prod_690f5e128ae43.png'),
 (39, 'Refresco Fanta Toronja 2 Lt', 'refresco', 450, 33, 1, 'img/prod_690f5ea2584cd.jpg'),
 (40, 'Refresco Fanta Toronja Lata x 355 ml', 'Descubre el burbujeante sabor de Fanta Toronja en presentación Lata 355 ml y haz tus snacks más divertidos.', 200, 234, 1, 'img/prod_690f5efdb9e6b.jpg'),
 (41, 'Schweppes Aguakina Lata 355 ml', 'Bebida gaseosa sin alcohol aromatizada con quinina, en presentación de lata 355 ML. Ideal para combinar con tus bebidas favoritas y realzar su sabor dándole mayor efervescencia y sofisticación. Mezclador por excelencia y acompañante perfecto para tu vida social. Disponible para bebedores exigentes y magistrales cocteleras.', 450, 213, 1, 'img/prod_690f5f2e00d17.jpg'),
-(42, 'Bebida energética ', 'Monster Clásico Lata 473 ml', 740, 33, 1, 'img/prod_690f5f6752b10.png'),
+(42, 'Bebida energética ', 'Monster Clásico Lata 473 ml', 740, 32, 1, 'img/prod_690f5f6752b10.png'),
 (43, 'Bebida Energética', 'Monster Mango Loco Lata 473 ml', 715, 12, 1, 'img/prod_690f5f8dd2be9.png'),
 (44, 'Galletas Soda Puig 240Gr', 'Galletas crujientes y tostaditas.', 400, 123, 1, 'img/prod_690f6148ce10c.jpg'),
 (45, 'Galleta de Chocolate Samba Savoy Fresa x 32 gr', 'Galleta cubierta rellena sabor a fresa', 100, 22, 1, 'img/prod_690f61835d645.png'),
@@ -217,7 +231,7 @@ INSERT INTO `productos` (`id_producto`, `nombre`, `descripcion`, `precio`, `cant
 (47, 'Snack Cheese Tris x 150 gr', 'Producto de Frito Lay, presentación 150 gr. Cereal de maíz inflado con queso', 212, 123, 1, 'img/prod_690f61ddbd5c1.png'),
 (48, 'Snack Pepito 80Gr', 'Cereal de maíz inflado con sabor a queso', 300, 122, 1, 'img/prod_690f61fcd2476.jpg'),
 (49, 'Chocolate St Moritz Flaquito Nevado 30Gr', 'Galleta crocante de vainilla', 122, 22, 1, 'img/prod_690f62288c8de.jpg'),
-(50, 'Chocolate Savoy Con Leche x 30 gr', 'Chocolate con leche.', 100, 122, 1, 'img/prod_690f6246504fa.png'),
+(50, 'Chocolate Savoy Con Leche x 30 gr', 'Chocolate con leche.', 100, 121, 1, 'img/prod_690f6246504fa.png'),
 (51, 'Caramelos Freegells Extra Fuerte 31.7Gr', 'Libérate del aburrimiento y sumérgete en la frescura de los Caramelos Freegells. ¡Tu paladar te lo agradecerá!', 50, 222, 1, 'img/prod_690f62605b0a0.jpg'),
 (52, 'Snack Doritos Mega Queso x 45 gr', 'Hojuelas de maíz tostadas con sabor a queso', 220, 122, 1, 'img/prod_690f627bbfba4.jpg'),
 (53, 'Crema Dental Colgate Triple Accion 75Ml', 'Obtén triple beneficio: Protección, Blancura, y Frescura, con tu crema dental Colgate Triple Acción.', 500, 122, 3, 'img/prod_690f644140e29.jpg'),
@@ -229,7 +243,7 @@ INSERT INTO `productos` (`id_producto`, `nombre`, `descripcion`, `precio`, `cant
 (59, 'Jabón En Barra Protex Avena x 110 gr', 'Jabón Protex Avena elimina 99.9% de las bacterias naturalmente.', 300, 122, 3, 'img/prod_690f657f94edd.jpg'),
 (60, 'Jabón En Barra Rexona Limpieza Profunda x 120 gr', 'Jabón en barra antibacterial', 122, 22, 3, 'img/prod_690f659d0b941.jpg'),
 (61, 'Champu Anticaspa Farmatodo Frescura x 200 ml', 'shampoo', 550, 122, 3, 'img/prod_690f65ba2c287.jpg'),
-(62, 'Champu Drene Proh Complex Cabello Seco Maltratado 370Ml', 'Drene con ProH Complex te ayuda a tener el cabello que deseas con ingredientes ideales Keratina, Vitamina E y Pantenol.', 1200, 122, 3, 'img/prod_690f65d284aaa.jpg'),
+(62, 'Champu Drene Proh Complex Cabello Seco Maltratado 370Ml', 'Drene con ProH Complex te ayuda a tener el cabello que deseas con ingredientes ideales Keratina, Vitamina E y Pantenol.', 1200, 121, 3, 'img/prod_690f65d284aaa.jpg'),
 (63, 'Champu Pantene Restauración 200Ml', 'Pantene con su fórmula multivitaminas nutre tu cabello desde la raíz para que crezca largo y fuerte hasta las puntas.', 1500, 212, 3, 'img/prod_690f65ec30ed1.jpg');
 
 -- --------------------------------------------------------
@@ -269,7 +283,8 @@ CREATE TABLE `telefonos_usuarios` (
 
 INSERT INTO `telefonos_usuarios` (`id_telefono`, `id_usuario`, `numero_tlf`) VALUES
 (11, 15, '2147483647'),
-(13, 17, '2147483647');
+(13, 17, '2147483647'),
+(14, 18, '04241583015');
 
 -- --------------------------------------------------------
 
@@ -290,7 +305,8 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id_usuario`, `nombre`, `correo`, `contraseña_hash`) VALUES
 (15, 'Barbara Antoima', 'mafr737@gmail.com', '$2y$10$qh39hRM22rVLA9vWC6cyQujs3/Ab5jmIhywqhIcc2EoaKe9P3LAo.'),
-(17, 'Reinaldo ', 'reinaldopolanco14@gmail.com', '$2y$10$86W.zcDqHjFYbY8m8a.MBuFfaJa54Fwqfd.LSnORGzNvsPgPfWssK');
+(17, 'Reinaldo ', 'reinaldopolanco14@gmail.com', '$2y$10$86W.zcDqHjFYbY8m8a.MBuFfaJa54Fwqfd.LSnORGzNvsPgPfWssK'),
+(18, 'Reinaldo ', 'leagueoflegendspolanco@gmail.com', '$2y$10$.rcL0HaUd/f1Yk2fu1qwf.D/rHTtJ/SNg.pIsQ8bCe82ePhlWyVkq');
 
 -- --------------------------------------------------------
 
@@ -418,7 +434,7 @@ ALTER TABLE `admin_trabajadores`
 -- AUTO_INCREMENT de la tabla `carrito_compras`
 --
 ALTER TABLE `carrito_compras`
-  MODIFY `id_carrito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id_carrito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT de la tabla `categorias`
@@ -430,7 +446,7 @@ ALTER TABLE `categorias`
 -- AUTO_INCREMENT de la tabla `detalles_carrito`
 --
 ALTER TABLE `detalles_carrito`
-  MODIFY `id_detalle_car` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id_detalle_car` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT de la tabla `detalles_pago`
@@ -442,19 +458,19 @@ ALTER TABLE `detalles_pago`
 -- AUTO_INCREMENT de la tabla `detalles_pedido`
 --
 ALTER TABLE `detalles_pedido`
-  MODIFY `id_detallle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id_detallle` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT de la tabla `direcciones_usuarios`
 --
 ALTER TABLE `direcciones_usuarios`
-  MODIFY `id_direccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_direccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `pagos`
 --
 ALTER TABLE `pagos`
-  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
@@ -466,19 +482,19 @@ ALTER TABLE `productos`
 -- AUTO_INCREMENT de la tabla `telefonos_usuarios`
 --
 ALTER TABLE `telefonos_usuarios`
-  MODIFY `id_telefono` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_telefono` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `ventas`
 --
 ALTER TABLE `ventas`
-  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- Restricciones para tablas volcadas
