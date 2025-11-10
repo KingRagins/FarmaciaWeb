@@ -52,22 +52,33 @@
                                     <span class="input-group-text">1 USD =</span>
                                 </div>
                                 <input type="number" step="0.01" name="tipo_cambio" 
-                                       class="form-control" value="<?php echo number_format($tipo_cambio, 2); ?>"
-                                       style="width: 120px;">
+       class="form-control" value="<?php echo number_format($tipo_cambio, 2); ?>"
+       style="width: 120px;"
+       <?php echo (isset($_SESSION['s_rol']) && $_SESSION['s_rol'] == 2) ? 'readonly' : ''; ?>>
                                 <div class="input-group-append">
                                     <span class="input-group-text">BS</span>
                                 </div>
                                 <div class="input-group-append">
-                                    <button type="submit" class="btn btn-warning">
-                                        Actualizar
-                                    </button>
-                                </div>
+    <?php if (isset($_SESSION['s_rol']) && $_SESSION['s_rol'] == 2): ?>
+        <button type="submit" class="btn btn-warning" disabled>
+            Actualizar
+        </button>
+        
+    <?php else: ?>
+        <button type="submit" class="btn btn-warning">
+            Actualizar
+        </button>
+    <?php endif; ?>
+</div>
                             </div>
                             <?php if (isset($_SESSION['tipo_cambio'])): ?>
-                                <small class="text-muted d-block mt-1">
-                                    Expira en: <?php echo $tiempo_texto; ?>
-                                </small>
-                            <?php endif; ?>
+    <small class="text-muted d-block mt-1">
+        Expira en: 
+        <span id="contador-tiempo">
+            <?php echo sprintf("%dh %02dmin %02dseg", $horas, $minutos, $segundos); ?>
+        </span>
+    </small>
+<?php endif; ?>
                         </form>
                     </div>
                     <div class="col-auto">
@@ -222,4 +233,34 @@
             </div>
         </div>
     </div>
+
+<script>
+// Solo ejecutar si hay sesión activa
+<?php if (isset($_SESSION['tipo_cambio'])): ?>
+    let segundosRestantes = <?php echo $tiempo_restante_inicial; ?>;
+
+    const contador = document.getElementById('contador-tiempo');
+    const inputTipoCambio = document.querySelector('input[name="tipo_cambio"]');
+
+    const intervalo = setInterval(() => {
+        if (segundosRestantes <= 0) {
+            clearInterval(intervalo);
+            contador.innerHTML = '<span class="text-danger">Expirado</span>';
+            inputTipoCambio.value = '50.00';
+            // Opcional: recargar para resetear
+            setTimeout(() => location.reload(), 1000);
+            return;
+        }
+
+        segundosRestantes--;
+        const h = Math.floor(segundosRestantes / 3600);
+        const m = Math.floor((segundosRestantes % 3600) / 60);
+        const s = segundosRestantes % 60;
+
+        contador.innerHTML = `${h}h ${m.toString().padStart(2, '0')}min ${s.toString().padStart(2, '0')}seg`;
+    }, 1000);
+<?php endif; ?>
+</script>
+
+
 </div>

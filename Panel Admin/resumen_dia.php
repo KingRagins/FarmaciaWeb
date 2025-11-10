@@ -36,27 +36,73 @@ if (isset($_GET['tipo_cambio']) && is_numeric($_GET['tipo_cambio'])) {
     if ($nuevo_tipo > 0) {
         $_SESSION['tipo_cambio'] = $nuevo_tipo;
         $_SESSION['tipo_cambio_timestamp'] = time();
+
+        // === GUARDAR EN BD ===
+        try {
+            $sql_guardar = "INSERT INTO pagos (monto_unico, tipo_cambio_usd, metodo_pago, estado_pago, fecha_pago) 
+                            VALUES (0, ?, 'config_tc', 'config', NOW())";
+            $stmt_guardar = $conexion->prepare($sql_guardar);
+            $stmt_guardar->execute([$nuevo_tipo]);
+        } catch (Exception $e) {
+            // Silenciar error (no romper flujo)
+        }
     }
 }
-
 // Verificar si existe en sesión y no ha expirado
-if (
-    isset($_SESSION['tipo_cambio']) && 
-    isset($_SESSION['tipo_cambio_timestamp']) &&
-    (time() - $_SESSION['tipo_cambio_timestamp']) < $expiracion_segundos
-) {
-    $tipo_cambio = $_SESSION['tipo_cambio'];
-} else {
+// === NUEVA LÓGICA: CARGAR DE BD SI NO HAY SESIÓN VÁLIDA ===
+$tipo_cambio = $valor_defecto;
+
+try {
+    // 1. Intentar cargar desde sesión (válida)
+    if (
+        isset($_SESSION['tipo_cambio']) && 
+        isset($_SESSION['tipo_cambio_timestamp']) &&
+        (time() - $_SESSION['tipo_cambio_timestamp']) < $expiracion_segundos
+    ) {
+        $tipo_cambio = $_SESSION['tipo_cambio'];
+    } else {
+        // 2. Si no hay sesión válida → cargar último valor de la BD
+        $sql_ultimo = "SELECT tipo_cambio_usd FROM pagos WHERE tipo_cambio_usd IS NOT NULL ORDER BY id_pago DESC LIMIT 1";
+        $stmt_ultimo = $conexion->prepare($sql_ultimo);
+        $stmt_ultimo->execute();
+        $ultimo = $stmt_ultimo->fetch(PDO::FETCH_ASSOC);
+
+        if ($ultimo && $ultimo['tipo_cambio_usd'] !== null) {
+            $tipo_cambio = floatval($ultimo['tipo_cambio_usd']);
+            // Restaurar en sesión para evitar consultas repetidas
+            $_SESSION['tipo_cambio'] = $tipo_cambio;
+            $_SESSION['tipo_cambio_timestamp'] = time();
+        }
+    }
+} catch (Exception $e) {
+    // En caso de error, usar valor por defecto
     $tipo_cambio = $valor_defecto;
-    unset($_SESSION['tipo_cambio']);
-    unset($_SESSION['tipo_cambio_timestamp']);
 }
 
 // Calcular tiempo restante
-$tiempo_restante = $expiracion_segundos - (time() - ($_SESSION['tipo_cambio_timestamp'] ?? time()));
+// === TIEMPO RESTANTE CON SEGUNDOS ===
+$timestamp_inicio = $_SESSION['tipo_cambio_timestamp'] ?? time();
+$tiempo_restante = $expiracion_segundos - (time() - $timestamp_inicio);
+
+// Evitar negativos
+$tiempo_restante = max(0, $tiempo_restante);
+
 $horas = floor($tiempo_restante / 3600);
 $minutos = floor(($tiempo_restante % 3600) / 60);
-$tiempo_texto = ($horas > 0 ? "$horas h " : "") . "$minutos min";
+$segundos = $tiempo_restante % 60;
+
+$tiempo_texto = sprintf(
+    "%dh %02dmin %02dseg",
+    $horas,
+    $minutos,
+    $segundos
+);
+
+// Pasar al JS
+$tiempo_restante_inicial = $tiempo_restante;
+
+
+
 
 // 6. CONSULTAS PRINCIPALES
 $sql_ventas_pagadas = "
@@ -115,18 +161,10 @@ require_once "view/resumen_dia.php";
 ?>
 
 <!--INICIO DEL CONTENIDO PRINCIPAL-->
-<?php if (isset($_SESSION['s_rol']) && $_SESSION['s_rol'] == 2): ?>
-    <!-- ROL 2: TODO BORROSO + SIN INTERACCIÓN -->
-    <div class="disabled-full-section">
-        <div class="restriction-overlay">Acceso Restringido - Solo Lectura</div>
-        <?php include 'resumen_content.php'; ?>
-    </div>
-<?php else: ?>
-    <!-- OTROS ROLES: NORMAL -->
-    <div class="container-fluid">
-        <?php include 'resumen_content.php'; ?>
-    </div>
-<?php endif; ?>
+<!-- CONTENIDO PARA TODOS LOS ROLES -->
+<div class="container-fluid">
+    <?php include 'resumen_content.php'; ?>
+</div>
 
 <style>
 .disabled-full-section {
@@ -153,6 +191,14 @@ require_once "view/resumen_dia.php";
     box-shadow: 0 6px 20px rgba(0,0,0,0.3);
     white-space: nowrap;
 }
+
+#contador-tiempo {
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    color: #e74c3c;
+}
+.text-danger { color: #dc3545 !important; }
+
 </style>
 
 <script src="../logins/jquery/jquery-3.3.1.min.js"></script>
